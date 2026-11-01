@@ -1,0 +1,21 @@
+# 每日取数产生的快照是工作文件，不入库（需要留档时 git add -f）
+snapshot_*.json
+# 只保留一份示例快照，方便没装 MCP 的人直接试跑 build.py
+!snapshot_2026-10-30.json
+
+# 产物
+市场温度计-*.html
+*.png
+
+# 运行时
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 编辑器 / 系统
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

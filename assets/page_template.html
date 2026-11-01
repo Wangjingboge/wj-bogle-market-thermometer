@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>望京博格 · 市场温度计 | 2026-10-16</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #191c20;
+    --ink-2: #4a5462;
+    --muted: #7d8794;
+    --line: #ededf0;
+    --line-2: #f5f6f8;
+    --up: #d93a33;
+    --down: #17994f;
+    --sheet: #ffffff;
+    --page: #eef0f3;
+  }
+
+  body {
+    font-family: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+    background: var(--page);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    padding: 34px 20px 60px;
+    font-feature-settings: "tnum";
+  }
+
+  .sheet {
+    width: 100%;
+    max-width: 1020px;
+    margin: 0 auto;
+    background: var(--sheet);
+    border-radius: 22px;
+    box-shadow: 0 1px 2px rgba(20,28,40,.05), 0 18px 50px -22px rgba(20,28,40,.28);
+    padding: 34px 38px 30px;
+  }
+
+  /* ── 头部 ── */
+  .head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+  }
+  .brand-mark {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(160deg, #ff7a45, #d93a33);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: -.5px;
+    box-shadow: 0 4px 12px -4px rgba(217,58,51,.7);
+  }
+  .brand-t {
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -1.2px;
+    line-height: 1.12;
+  }
+  .brand-s {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 6px;
+    letter-spacing: .3px;
+  }
+  .head-r {
+    text-align: right;
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .head-r b {
+    display: block;
+    font-size: 21px;
+    color: var(--ink);
+    font-weight: 600;
+    letter-spacing: .2px;
+    margin-bottom: 2px;
+  }
+
+  /* ── 温度计区 ── */
+  .thermos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0 26px;
+  }
+
+  .tcard {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 14px 12px 12px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    background: linear-gradient(180deg, #fcfcfd 0%, #ffffff 60%);
+    position: relative;
+    overflow: hidden;
+  }
+  .tcard svg {
+    flex: 0 0 auto;
+    height: 336px;
+    width: auto;
+    display: block;
+  }
+  .tcard::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+  }
+  .tcard.a::before { background: linear-gradient(90deg, #d93a33, #ff9a6b, transparent 85%); }
+  .tcard.h::before { background: linear-gradient(90deg, #2b7fd4, #5ec4b6, transparent 85%); }
+
+  .tcard-l { min-width: 0; }
+  .tlabel {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: .4px;
+    margin-bottom: 7px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .tlabel::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 4px; height: 20px;
+    border-radius: 2px;
+    background: var(--up);
+  }
+  .tcard.h .tlabel::before { background: #2b7fd4; }
+  .tpill {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 5px;
+    background: var(--line-2);
+    color: var(--ink-2);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .2px;
+    margin-bottom: 11px;
+  }
+  .tnum {
+    font-size: 64px;
+    font-weight: 700;
+    letter-spacing: -2px;
+    line-height: .96;
+    font-variant-numeric: tabular-nums;
+  }
+  .tnum i {
+    font-style: normal;
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0;
+    margin-left: 1px;
+    vertical-align: 14px;
+  }
+  .tdelta {
+    margin-top: 9px;
+    font-size: 14px;
+    color: var(--ink-2);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .tdelta em {
+    font-style: normal;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .tdelta .up { color: var(--up); }
+  .tdelta .down { color: var(--down); }
+  .tverdict {
+    margin-top: 11px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    padding: 3px 10px 3px 8px;
+    border-radius: 20px;
+    background: var(--line-2);
+    color: var(--ink-2);
+  }
+  .tverdict i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex: 0 0 auto;
+  }
+
+  /* ── 表格 ── */
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    margin: 0 0 9px;
+  }
+  .sec-t {
+    font-size: 23px;
+    font-weight: 600;
+    letter-spacing: .2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sec-t::before {
+    content: "";
+    width: 3px; height: 13px;
+    border-radius: 2px;
+    background: var(--ink);
+  }
+  .sec-t.hk::before { background: #2b7fd4; }
+  .sec-n {
+    font-size: 17.5px;
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: .3px;
+  }
+  .sec-r {
+    font-size: 17.5px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 21px;
+    table-layout: fixed;
+  }
+  thead th {
+    font-weight: 500;
+    font-size: 18px;
+    color: #6b7686;
+    text-align: right;
+    padding: 7px 8px;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: .2px;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition: color .12s;
+  }
+  thead th:hover { color: var(--ink); }
+  thead th.on { color: var(--ink); font-weight: 600; }
+  thead th.on::after {
+    content: " ↓";
+    font-size: 12px;
+    opacity: .55;
+  }
+  thead th.on.asc::after { content: " ↑"; }
+  th.c-name, td.c-name { text-align: left; }
+  th.c-idx, td.c-idx { text-align: center; }
+  th.c-etf, td.c-etf { text-align: center; }
+
+  tbody td {
+    padding: 7px 8px;
+    border-bottom: 1px solid #f7f8fa;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  tbody tr { transition: background .1s; }
+  tbody tr:hover { background: #fafbfc; }
+
+  td.c-idx { color: #949daa; font-size: 16px; }
+  td.c-name {
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+  }
+  td.c-name .tag {
+    display: inline-block;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #9aa4b0;
+    border: 1px solid #e6e9ed;
+    border-radius: 4px;
+    padding: 0 3px;
+    margin-left: 5px;
+    vertical-align: 1px;
+    letter-spacing: .2px;
+  }
+  .up { color: var(--up); }
+  .down { color: var(--down); }
+  .flat { color: var(--muted); }
+
+  td.c-pe { color: var(--ink-2); }
+  td.c-temp { font-weight: 600; padding-right: 10px; }
+  .bar {
+    display: inline-block;
+    vertical-align: middle;
+    width: 46px;
+    height: 6px;
+    border-radius: 3px;
+    background: #eff1f4;
+    margin-left: 9px;
+    overflow: hidden;
+  }
+  .bar i {
+    display: block;
+    height: 100%;
+    border-radius: 3px;
+  }
+  td.c-etf {
+    font-size: 14.5px;
+    color: #7c8694;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    letter-spacing: -.2px;
+  }
+  td.c-etf .no { color: #d3d8de; }
+
+  .foot {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px dashed var(--line);
+    font-size: 13px;
+    line-height: 1.85;
+    color: var(--muted);
+  }
+  .foot b { color: var(--ink-2); font-weight: 600; }
+  .foot .rule {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin-bottom: 10px;
+    color: var(--ink-2);
+  }
+  .foot .rule span::before {
+    content: "";
+    display: inline-block;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: #c8cfd8;
+    margin-right: 6px;
+    vertical-align: 2px;
+  }
+
+  /* ── 十年走势 ── */
+  .hist { position: relative; }
+  .hist-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 26px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .hist-bar b {
+    color: var(--ink-2);
+    font-size: 15px;
+    font-weight: 600;
+    margin-left: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+  .hist-bar .hi b { color: var(--up); }
+  .hist-bar .lo b { color: #2b7fd4; }
+  .hist-wrap { position: relative; }
+  .hist-wrap svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .htip {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .12s;
+    background: #1e2329;
+    color: #fff;
+    font-size: 12.5px;
+    line-height: 1.45;
+    padding: 5px 9px;
+    border-radius: 7px;
+    white-space: nowrap;
+    transform: translate(-50%, -125%);
+    box-shadow: 0 8px 20px -8px rgba(0,0,0,.45);
+    z-index: 3;
+  }
+  .htip b { font-size: 15px; font-variant-numeric: tabular-nums; }
+  .htip span { color: #b9c1cb; margin-left: 6px; font-size: 12px; }
+  .hnote {
+    margin: 14px 0 22px;
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: #9aa3af;
+  }
+  .hnote b { color: #7d8693; font-weight: 600; }
+
+  /* 双栏并排 */
+  .duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 30px;
+    align-items: start;
+  }
+  .duo-col { min-width: 0; }
+  .duo-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 0 0 12px;
+  }
+  .duo-t {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    white-space: nowrap;
+  }
+  .duo-t::before {
+    content: "";
+    width: 4px; height: 19px;
+    border-radius: 2px;
+    background: var(--up);
+  }
+  .duo-t.hk::before { background: #2b7fd4; }
+  .duo-s {
+    font-size: 13.5px;
+    color: #8d97a4;
+    white-space: nowrap;
+    letter-spacing: .1px;
+  }
+  .hist-bar.duo {
+    gap: 4px 14px;
+    font-size: 13.5px;
+    margin-bottom: 8px;
+  }
+  .hist-bar.duo b { font-size: 15.5px; margin-left: 4px; }
+  .hist-bar.duo i {
+    font-style: normal;
+    font-size: 12.5px;
+    color: #949daa;
+    margin-left: 4px;
+  }
+  .duo-legend {
+    display: flex;
+    gap: 16px;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #8d97a4;
+  }
+  .duo-legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .duo-legend i {
+    display: block;
+    width: 15px;
+    height: 0;
+    border-top: 1px dashed #d4372f;
+  }
+  .duo-legend i.b30 { border-top-color: #2b7fd4; }
+  .duo-note {
+    margin-top: 6px;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: #8d97a4;
+  }
+  .tnote {
+    margin: 8px 0 0;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #8d97a4;
+  }
+
+  @media (max-width: 860px) {
+    .sheet { padding: 24px 18px; }
+    .thermos { grid-template-columns: 1fr; }
+    .duo { grid-template-columns: 1fr; gap: 26px 0; }
+    .tnum { font-size: 50px; }
+    table { font-size: 13px; }
+    thead th, tbody td { padding: 6px 4px; }
+    .bar { display: none; }
+    th.c-etf, td.c-etf { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="head">
+    <div class="brand">
+      <div class="brand-mark">博</div>
+      <div>
+        <div class="brand-t">望京博格的市场温度计</div>
+        <div class="brand-s">31个申万一级行业 + 6个宽基</div>
+      </div>
+    </div>
+    <div class="head-r">
+      <b>2026 / 10 / 16</b>
+      收盘数据 · 数据来源 Wind
+    </div>
+  </div>
+
+  <div class="thermos" id="thermos"></div>
+
+  <div class="duo" style="margin-top:26px">
+    <section class="duo-col">
+      <div class="duo-head">
+        <div class="duo-t">A股 十年温度走势</div>
+        <div class="duo-s">2016/12 — 2026/10</div>
+      </div>
+      <div class="hist-bar duo" id="histBar"></div>
+      <div class="hist-wrap">
+        <svg id="histSvg" viewBox="0 0 460 300" role="img" aria-label="A股十年温度走势"></svg>
+        <div class="htip" id="histTip"></div>
+      </div>
+      <div class="duo-legend"><span><i></i>50° 卖出线</span><span><i class="b30"></i>30° 买入线</span></div>
+      <div class="duo-note">37 个标的口径固定，全程可比。悬停曲线可看具体日期。</div>
+    </section>
+
+    <section class="duo-col">
+      <div class="duo-head">
+        <div class="duo-t hk">港股 十年温度走势</div>
+        <div class="duo-s">2016/12 — 2026/10</div>
+      </div>
+      <div class="hist-bar duo" id="histBar2"></div>
+      <div class="hist-wrap">
+        <svg id="histSvg2" viewBox="0 0 460 300" role="img" aria-label="港股十年温度走势"></svg>
+        <div class="htip" id="histTip2"></div>
+      </div>
+      <div class="duo-legend"><span><i></i>50° 卖出线</span><span><i class="b30"></i>30° 买入线</span></div>
+      <div class="duo-note">标的由 2 只增至 7 只，早期与当前不完全可比。</div>
+    </section>
+  </div>
+
+  <div class="hnote">
+    <b>采样口径：</b>两图共用 48 个采样点（2016Q4–2025Q3 按季末，2025Q4 起按月，末点 2026-10-16）。
+    A股为 31 个申万一级行业 + 6 个宽基的 PE(TTM) 十年分位数等权平均；港股为 7 只港股指数同口径。
+    港股这 7 只并非同时存在 —— <b>2016–2019 只有恒生指数、恒生消费</b>；2020 年起陆续纳入恒生科技、港股通红利；
+    2021 年起纳入港股通非银（中证 931024.CSI）；2024–2025 年纳入汽车主题、创新药，7 只才算齐备，
+    因此港股曲线越靠左，参与平均的标的越少（悬停可看当日标的数）。新指数的 PE 分位数历史不足 3 年时不计入当日均值，
+    避免短期极值把分位数钉在 0 或 100。
+  </div>
+
+  <div class="sec-head">
+    <div class="sec-t">A股 分项温度 <span class="sec-n">37 个标的 · 按行业温度从低到高</span></div>
+    <div class="sec-r">温度升序（冷 → 热）</div>
+  </div>
+  <table id="ta"></table>
+
+  <div class="sec-head" style="margin-top:26px">
+    <div class="sec-t hk">港股 分项温度 <span class="sec-n">7 个标的</span></div>
+  </div>
+  <table id="th"></table>
+  <div class="tnote">「港股通非银」点位取中证 931024.CSI（2024-09-24 收 2534.39，2026-10-16 收 3605.58，按港币计价）。</div>
+
+  <div class="foot">
+    <div class="rule">
+      <span><b>30 度以下</b> 开始买入（可提高仓位）</span>
+      <span><b>50 度以上</b> 开始卖出（不可提高仓位）</span>
+      <span>开始买入 ≠ 直接满仓</span>
+      <span>开始卖出 ≠ 立刻清仓</span>
+    </div>
+    <div>
+      <b>编制方法：</b>取 31 个申万一级行业指数与 6 个宽基指数（中证A500、上证50、沪深300、中证500、创业板指、中证1000）各自最新 PE(TTM) 在<b>近 10 年</b>历史序列中的分位数，做<b>等权平均</b>（非市值加权）得到综合温度。市值加权会把银行、地产的高权重带进来，容易把温度压低，所以博格一直用等权。<br>
+      <b>涨幅列：</b>「924 以来」= 2026-10-16 收盘 ÷ 2024-09-24 收盘 − 1，按指数点位计算，不含分红。2024-09-24 是那轮一揽子政策的起点日，常被当作这轮行情的原点。<br>
+      <b>怎么用：</b>温度是估值位置的模糊刻度，不是点位预测。估值 = 股价 ÷ 盈利，盈利在涨的时候，同样的点位温度会自己降下来 —— 所以横向对比历史极值时，别忘了锚点会变。<br>
+      <b>免责：</b>以上不构成任何投资建议，股市有风险，入市需谨慎。
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ───────── 数据 ─────────
+   chg 当日涨幅% | ytd 今年以来% | s924 2024-09-24 以来% | pe 当日PE(TTM) | t 温度(=PE近10年分位)
+   prev 上一交易日温度（用于计算日变化）                             */
+const A = [
+  // ── 31 个申万一级行业 ──
+  { n:'通信(5G)',          g:'行业', chg: 0.08, ytd:  5.08, s924: 152.87, pe:41.46, t:63.7263, prev:63.5352, etf:'515880' },
+  { n:'电子(芯片)',        g:'行业', chg:-0.56, ytd:  8.02, s924: 126.97, pe:50.47, t:68.3560, prev:68.7268, etf:'159995' },
+  { n:'有色金属',          g:'行业', chg: 0.78, ytd:-16.26, s924:  73.19, pe:15.51, t:10.6716, prev:10.1772, etf:'561330' },
+  { n:'综合',              g:'行业', chg: 0.23, ytd: -1.43, s924: 101.94, pe:73.69, t:91.3885, prev:91.1413, etf:'' },
+  { n:'机械设备',          g:'行业', chg: 0.31, ytd:-13.10, s924:  57.15, pe:37.00, t:74.1138, prev:73.8360, etf:'516960' },
+  { n:'轻工制造',          g:'行业', chg: 0.57, ytd:-19.08, s924:  20.77, pe:32.17, t:81.9530, prev:81.4998, etf:'' },
+  { n:'纺织服饰',          g:'行业', chg: 0.24, ytd:-13.16, s924:  20.58, pe:24.18, t:45.5295, prev:40.2555, etf:'' },
+  { n:'环保',              g:'行业', chg: 0.45, ytd:-11.21, s924:  28.41, pe:23.43, t:59.7113, prev:58.3265, etf:'512580' },
+  { n:'基础化工',          g:'行业', chg: 0.79, ytd:-11.51, s924:  35.87, pe:23.66, t:52.3692, prev:51.7511, etf:'159870' },
+  { n:'美容护理(医美)',    g:'行业', chg: 0.63, ytd:-21.49, s924:  -6.01, pe:28.24, t: 8.9448, prev: 7.6226, etf:'' },
+  { n:'房地产',            g:'行业', chg: 2.12, ytd:-15.36, s924:   2.20, pe:13.25, t:51.1743, prev:49.2789, etf:'512220' },
+  { n:'建筑装饰',          g:'行业', chg: 1.31, ytd:-12.73, s924:  17.46, pe:14.20, t:81.1290, prev:80.7993, etf:'' },
+  { n:'国防军工',          g:'行业', chg: 2.99, ytd:-21.62, s924:  34.71, pe:55.52, t:23.3622, prev:14.5035, etf:'512660' },
+  { n:'建筑材料',          g:'行业', chg: 1.63, ytd: -0.58, s924:  45.25, pe:34.35, t:88.4219, prev:87.5567, etf:'159745' },
+  { n:'计算机',            g:'行业', chg:-0.40, ytd:-23.38, s924:  28.99, pe:56.86, t:46.3314, prev:46.9304, etf:'512720' },
+  { n:'酒店+旅游+检测',    g:'行业', chg:-0.13, ytd:-20.88, s924:   8.23, pe:39.91, t:32.4269, prev:32.5093, etf:'159766' },
+  { n:'医药+医疗',         g:'行业', chg:-1.24, ytd: -8.10, s924:  18.35, pe:31.40, t:36.2176, prev:38.4425, etf:'512010' },
+  { n:'商贸零售',          g:'行业', chg:-0.05, ytd:-29.76, s924:  10.28, pe:31.79, t:56.8603, prev:56.9015, etf:'' },
+  { n:'发电厂',            g:'行业', chg:-0.04, ytd:  1.03, s924:   7.85, pe:21.63, t:56.0775, prev:56.0775, etf:'159611' },
+  { n:'传媒(游戏)',        g:'行业', chg:-2.30, ytd:-17.89, s924:  37.00, pe:34.55, t:40.3133, prev:44.6230, etf:'159869' },
+  { n:'证券+保险',         g:'行业', chg:-0.65, ytd:-19.16, s924:  14.44, pe: 8.80, t: 0.0000, prev: 0.0824, etf:'512880' },
+  { n:'钢铁',              g:'行业', chg: 1.11, ytd:-21.32, s924:  17.25, pe:29.42, t:80.7169, prev:79.8929, etf:'515210' },
+  { n:'电力设备(电池光伏)',g:'行业', chg: 0.02, ytd:-24.16, s924:  33.71, pe:25.43, t:18.8298, prev:18.7474, etf:'516090' },
+  { n:'煤炭',              g:'行业', chg: 0.90, ytd: 24.13, s924:  21.33, pe:18.84, t:84.4948, prev:83.9654, etf:'515220' },
+  { n:'汽车',              g:'行业', chg: 1.92, ytd:-26.46, s924:  12.64, pe:23.77, t:41.6323, prev:38.9782, etf:'516110' },
+  { n:'石油石化',          g:'行业', chg: 1.32, ytd:  4.96, s924:  26.32, pe:16.60, t:56.3299, prev:54.2869, etf:'' },
+  { n:'食品饮料(白酒)',    g:'行业', chg: 0.84, ytd:-13.90, s924:  -9.01, pe:21.12, t:15.5336, prev:13.3498, etf:'512690' },
+  { n:'交通运输',          g:'行业', chg: 0.15, ytd: -9.42, s924:   4.04, pe:16.70, t:47.3012, prev:46.9304, etf:'' },
+  { n:'银行',              g:'行业', chg:-0.07, ytd:  1.97, s924:  25.80, pe: 6.50, t:57.9967, prev:58.2200, etf:'516310' },
+  { n:'猪肉+农业',         g:'行业', chg: 2.01, ytd:-16.10, s924:  11.56, pe:79.20, t:89.0400, prev:89.0400, etf:'159865' },
+  { n:'家用电器',          g:'行业', chg: 0.23, ytd: -9.71, s924:  13.02, pe:14.59, t:34.8991, prev:34.0338, etf:'159996' },
+  // ── 6 个宽基 ──
+  { n:'中证A500',          g:'宽基', chg: 0.13, ytd:-10.26, s924:  30.34, pe:15.13, t:56.8838, prev:56.7779, etf:'159338' },
+  { n:'上证50',            g:'宽基', chg: 0.11, ytd: -8.67, s924:  17.69, pe:10.78, t:57.5845, prev:57.7256, etf:'510050' },
+  { n:'沪深300',           g:'宽基', chg: 0.11, ytd: -9.92, s924:  24.42, pe:13.00, t:54.9464, prev:54.8414, etf:'510300' },
+  { n:'中证500',           g:'宽基', chg: 0.05, ytd: -9.28, s924:  44.42, pe:29.25, t:70.1979, prev:69.6745, etf:'510500' },
+  { n:'创业板',            g:'宽基', chg:-0.39, ytd:-13.45, s924:  71.63, pe:31.90, t:18.7964, prev:19.4067, etf:'159915' },
+  { n:'中证1000',          g:'宽基', chg: 0.05, ytd:-12.03, s924:  43.93, pe:38.55, t:52.9266, prev:52.8224, etf:'512100' },
+];
+
+const H = [
+  { n:'恒生科技',   chg: 1.16, ytd:-25.52, s924:   4.92, pe:22.01, t:23.2528, prev:21.8954, etf:'513010' },
+  { n:'港股通非银', chg:-0.50, ytd:-16.02, s924:  42.27, pe: 5.19, t: 0.0000, prev: 0.0000, etf:'513750' },
+  { n:'恒生指数',   chg: 0.52, ytd: -5.63, s924:  27.30, pe:10.70, t:53.8242, prev:53.5177, etf:'159920' },
+  { n:'港股通高股息',chg: 0.04, ytd:  8.63, s924:  37.77, pe: 7.83, t:90.4118, prev:91.4067, etf:'513820' },
+  { n:'恒生消费',   chg: 0.62, ytd:-13.03, s924:   3.09, pe:13.53, t: 0.6916, prev: 0.5693, etf:'159699' },
+  { n:'港股创新药', chg: 1.97, ytd:-10.49, s924:  53.26, pe:31.98, t:17.3152, prev:16.9591, etf:'513120' },
+  { n:'港股汽车',   chg: 0.78, ytd:-32.01, s924:   4.68, pe:21.05, t:29.9658, prev:30.5317, etf:'159323' },
+];
+
+/* ───────── 工具 ───────── */
+const avg = a => a.reduce((s, x) => s + x.t, 0) / a.length;
+const f2  = v => v.toFixed(2);
+
+function tempColor(t) {
+  // 0 冷 → 100 热
+  const stops = [
+    [0,   [ 59,139,217]],
+    [25,  [ 46,170,160]],
+    [35,  [ 52,179,126]],
+    [50,  [240,180, 41]],
+    [70,  [234,106, 58]],
+    [100, [212, 55, 47]],
+  ];
+  let a = stops[0], b = stops[stops.length - 1];
+  for (let i = 0; i < stops.length - 1; i++) {
+    if (t >= stops[i][0] && t <= stops[i + 1][0]) { a = stops[i]; b = stops[i + 1]; break; }
+  }
+  const k = (t - a[0]) / (b[0] - a[0] || 1);
+  const c = a[1].map((v, i) => Math.round(v + (b[1][i] - v) * k));
+  return `rgb(${c[0]},${c[1]},${c[2]})`;
+}
+
+function verdict(t) {
+  if (t < 20) return ['冰点 · 极度低估', '#3d8bd9'];
+  if (t < 30) return ['低温 · 可逐步买入', '#2fa88a'];
+  if (t < 50) return ['常温 · 持有观察', '#7c8794'];
+  if (t < 70) return ['偏热 · 可逐步卖出', '#e08a2b'];
+  return ['高温 · 谨慎减仓', '#d4372f'];
+}
+
+/* ───────── 温度计 SVG ───────── */
+function thermometer(value, uid) {
+  const Y0 = 320, Y1 = 40, k = (Y0 - Y1) / 100;   // 0度线 / 100度线
+  const y = v => Y0 - v * k;
+  const cx = 74, tubeW = 42, tubeTop = 36, tubeBot = 302;
+  const col = tempColor(value);
+
+  // 刻度
+  let ticks = '';
+  for (let v = 0; v <= 100; v += 10) {
+    const yy = y(v), major = v % 20 === 0;
+    ticks += `<line x1="${major ? 36 : 46}" y1="${yy}" x2="53" y2="${yy}"
+               stroke="${major ? '#c9d1d9' : '#dfe5eb'}" stroke-width="${major ? 1.2 : 1}"/>`;
+    if (major) ticks += `<text x="31" y="${yy + 3.8}" text-anchor="end" font-size="16"
+               fill="#9aa4b0" font-family="ui-monospace,Menlo,monospace">${v}</text>`;
+  }
+
+  // 温区底色
+  const zones = [
+    [0,  30, '#e7f0fa'],
+    [30, 50, '#e6f4ec'],
+    [50, 70, '#fdf2e1'],
+    [70, 100,'#fbe9e8'],
+  ].map(([a, b, c]) =>
+    `<rect x="53" y="${y(b)}" width="42" height="${y(a) - y(b)}" fill="${c}"/>`
+  ).join('');
+
+  // 玻璃外轮廓：管身 + 球泡 一体路径
+  const R = 40, CY = 318, TUBE_R = 21;
+  const tanY = CY - Math.sqrt(R * R - TUBE_R * TUBE_R);      // 管壁与球泡相切处
+  const GLASS = `M ${cx - TUBE_R} ${tubeTop + TUBE_R}
+                 A ${TUBE_R} ${TUBE_R} 0 0 1 ${cx + TUBE_R} ${tubeTop + TUBE_R}
+                 L ${cx + TUBE_R} ${tanY}
+                 A ${R} ${R} 0 1 1 ${cx - TUBE_R} ${tanY} Z`;
+
+  const yv = Math.max(0, Math.min(100, value));
+  const top = y(yv);
+  const h = Math.max(0, CY - top - 4);
+
+  // 买入 / 卖出 标注
+  const notes = {
+    30: ['30° 以下开始买入', '（可提高仓位）'],
+    50: ['50° 以上开始卖出', '（不可提高仓位）'],
+  };
+  const marks = [30, 50].map(v => {
+    const yy = y(v);
+    const [l1, l2] = notes[v];
+    return `<rect x="104" y="${yy - 17}" width="126" height="34" rx="6" fill="#f4f6f9"/>
+            <line x1="53" y1="${yy}" x2="104" y2="${yy}" stroke="#576273" stroke-width="1"
+              stroke-dasharray="3 2.6" opacity=".38"/>
+            <text x="112" y="${yy - 2.5}" font-size="14" fill="#525c6a"
+              letter-spacing=".1">${l1}</text>
+            <text x="112" y="${yy + 11}" font-size="12.5" fill="#9aa4b0"
+              letter-spacing=".1">${l2}</text>`;
+  }).join('');
+
+  return `
+  <svg viewBox="0 0 236 372" width="236" height="372" role="img" aria-label="温度 ${f2(value)}">
+    <defs>
+      <clipPath id="clip-${uid}"><path d="${GLASS}"/></clipPath>
+      <linearGradient id="mt-${uid}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#f1f5f9"/>
+        <stop offset="1" stop-color="#f9fbfc"/>
+      </linearGradient>
+    </defs>
+
+    ${ticks}
+
+    <!-- 玻璃管 -->
+    <path d="${GLASS}" fill="url(#mt-${uid})"/>
+    <g clip-path="url(#clip-${uid})">${zones}</g>
+    <path d="${GLASS}" fill="none" stroke="#dde3ea" stroke-width="1.3"/>
+
+    <!-- 水银 -->
+    <g clip-path="url(#clip-${uid})">
+      <circle cx="${cx}" cy="${CY}" r="31" fill="${col}"/>
+      <rect x="${cx - 15}" y="${top + 4}" width="30" height="${h}" fill="${col}"/>
+      <ellipse cx="${cx}" cy="${top + 5}" rx="15" ry="5.5" fill="${col}"/>
+      <rect x="${cx - 11}" y="${top + 12}" width="4.5" height="${Math.max(0, h - 20)}" rx="2.2"
+            fill="#fff" opacity=".35"/>
+      <circle cx="${cx - 10}" cy="307" r="8" fill="#fff" opacity=".15"/>
+    </g>
+
+    ${marks}
+  </svg>`;
+}
+
+/* ───────── 卡片 ───────── */
+function card(name, sub, data, cls) {
+  const t = avg(data);
+  const p = data.reduce((s, x) => s + x.prev, 0) / data.length;
+  const d = t - p;
+  const [txt, col] = verdict(t);
+  const arrow = d > 0.005 ? 'up' : d < -0.005 ? 'down' : 'flat';
+  const sign = d > 0.005 ? '+' : '';
+  return `
+  <div class="tcard ${cls}">
+    <div class="tcard-l">
+      <div class="tlabel">${name}市场温度</div>
+      <div class="tpill">${sub}</div>
+      <div class="tnum" style="color:${tempColor(t)}">${f2(t)}<i>℃</i></div>
+      <div class="tdelta">
+        较上一交易日
+        <em class="${arrow}">${sign}${f2(d)}°</em>
+      </div>
+      <div class="tverdict"><i style="background:${tempColor(t)}"></i>${txt}</div>
+    </div>
+    ${thermometer(t, cls)}
+  </div>`;
+}
+
+document.getElementById('thermos').innerHTML =
+  card('A股', '37个标的', A, 'a') + card('港股', '7个标的', H, 'h');
+
+/* ───────── 表格 ───────── */
+function pct(v) {
+  if (v == null) return `<span class="flat" title="该指数 2024-09-24 尚无数据">—</span>`;
+  const s = v > 0.0001 ? '+' : '';
+  const c = v > 0.0001 ? 'up' : v < -0.0001 ? 'down' : 'flat';
+  return `<span class="${c}">${s}${v.toFixed(2)}%</span>`;
+}
+
+function render(el, rows, withGroup) {
+  let sortKey = 't', sortAsc = true;
+  const cols = [
+    { k: 'idx', t: '序',   cls: 'c-idx',  sortable: false },
+    { k: 'n',   t: '行业名称', cls: 'c-name', sortable: false },
+    { k: 'ytd', t: '今年以来', cls: '' },
+    { k: 's924', t: '924以来', cls: '' },
+    { k: 'pe',  t: '当日PE', cls: 'c-pe' },
+    { k: 't',   t: '行业温度', cls: 'c-temp' },
+    { k: 'etf', t: '相关标的', cls: 'c-etf', sortable: false },
+  ];
+
+  const paint = () => {
+    const data = rows.slice().sort((a, b) => {
+      const av = a[sortKey], bv = b[sortKey];
+      if (av == null) return 1;            // 无数据的行始终排在末尾
+      if (bv == null) return -1;
+      return sortAsc ? av - bv : bv - av;
+    });
+    const head = `<thead><tr>${cols.map(c => {
+      const on = c.k === sortKey && c.sortable !== false;
+      return `<th class="${c.cls} ${on ? 'on' : ''} ${on && sortAsc ? 'asc' : ''}"
+                data-k="${c.k}" data-s="${c.sortable === false ? 0 : 1}"
+                style="${c.k === 'n' ? 'width:28%' : c.k === 'etf' ? 'width:9.5%' : c.k === 'idx' ? 'width:4.5%' : c.k === 't' ? 'width:13%' : ''}">${c.t}</th>`;
+    }).join('')}</tr></thead>`;
+
+    const body = `<tbody>${data.map((d, i) => {
+      const tc = tempColor(d.t);
+      return `<tr>
+        <td class="c-idx">${i + 1}</td>
+        <td class="c-name">${d.n}${withGroup && d.g ? `<span class="tag">${d.g}</span>` : ''}</td>
+        <td>${pct(d.ytd)}</td>
+        <td>${pct(d.s924)}</td>
+        <td class="c-pe">${d.pe.toFixed(2)}</td>
+        <td class="c-temp" style="color:${tc}">${d.t.toFixed(2)}<span class="bar"><i style="width:${d.t}%;background:${tc}"></i></span></td>
+        <td class="c-etf">${d.etf ? d.etf : '<span class="no">—</span>'}</td>
+      </tr>`;
+    }).join('')}</tbody>`;
+
+    el.innerHTML = head + body;
+    el.querySelectorAll('th').forEach(th => {
+      if (th.dataset.s !== '1') return;
+      th.onclick = () => {
+        const k = th.dataset.k;
+        if (sortKey === k) sortAsc = !sortAsc;
+        else { sortKey = k; sortAsc = false; }
+        paint();
+      };
+    });
+  };
+  paint();
+}
+
+render(document.getElementById('ta'), A, true);
+render(document.getElementById('th'), H, false);
+
+/* ───────── 十年温度走势 ─────────
+   口径与温度计完全一致：每个日期取 37 个标的 PE(TTM) 近10年分位数的等权平均。
+   采样：2016Q4–2025Q3 按季末，2025Q4 起按月末，最后一点为 2026-10-16。 */
+const TH = [
+  ['2016-12-30', 55.14], ['2017-03-31', 56.72], ['2017-06-30', 51.18], ['2017-09-29', 49.25],
+  ['2017-12-29', 42.91], ['2018-03-30', 37.76], ['2018-06-29', 22.69], ['2018-09-28', 15.78],
+  ['2018-12-28',  8.45], ['2019-03-29', 30.56], ['2019-06-28', 29.14], ['2019-09-30', 25.31],
+  ['2019-12-31', 32.01], ['2020-03-31', 23.98], ['2020-06-30', 48.30], ['2020-09-30', 54.03],
+  ['2020-12-31', 56.85], ['2021-03-31', 54.73], ['2021-06-30', 46.75], ['2021-09-30', 37.18],
+  ['2021-12-31', 45.30], ['2022-03-31', 33.32], ['2022-06-30', 38.60], ['2022-09-30', 28.03],
+  ['2022-12-30', 31.49], ['2023-03-31', 38.95], ['2023-06-30', 36.88], ['2023-09-28', 34.47],
+  ['2023-12-29', 28.60], ['2024-03-29', 30.27], ['2024-06-28', 24.40], ['2024-09-30', 43.87],
+  ['2024-12-31', 45.28], ['2025-03-31', 45.46], ['2025-06-30', 53.91], ['2025-09-30', 66.80],
+  ['2025-10-31', 67.15], ['2025-11-28', 64.15], ['2025-12-31', 66.81], ['2026-01-30', 70.01],
+  ['2026-02-27', 71.64], ['2026-03-31', 65.29], ['2026-04-30', 71.17], ['2026-05-29', 66.42],
+  ['2026-06-30', 61.66], ['2026-07-31', 60.22], ['2026-09-30', 56.03], ['2026-10-16', 51.55],
+];
+
+/* 港股：同一批日期，取 7 只港股指数 PE 近10年分位数的等权平均。
+   港股通非银用中证 931024.CSI，其 PE 序列自 2017-11 起，样本不足 3 年的日期不计入（否则分位数被短期极值钉死）。
+   第三个数字是当日实际参与平均的标的数。 */
+const THH = [
+  ['2016-12-30', 51.36, 2], ['2017-03-31', 66.69, 2], ['2017-06-30', 80.67, 2], ['2017-09-29', 83.49, 2],
+  ['2017-12-29', 86.19, 2], ['2018-03-30', 73.15, 2], ['2018-06-29', 62.98, 2], ['2018-09-28', 36.79, 2],
+  ['2018-12-28', 21.14, 2], ['2019-03-29', 66.08, 2], ['2019-06-28', 61.31, 2], ['2019-09-30', 36.01, 2],
+  ['2019-12-31', 67.58, 2], ['2020-03-31', 15.53, 2], ['2020-06-30', 54.90, 3], ['2020-09-30', 85.03, 3],
+  ['2020-12-31', 87.37, 4], ['2021-03-31', 67.56, 5], ['2021-06-30', 53.16, 5], ['2021-09-30', 29.32, 5],
+  ['2021-12-31', 35.11, 5], ['2022-03-31', 36.39, 5], ['2022-06-30', 45.80, 5], ['2022-09-30', 26.42, 5],
+  ['2022-12-30', 53.50, 5], ['2023-03-31', 56.50, 5], ['2023-06-30', 29.92, 5], ['2023-09-28', 28.48, 5],
+  ['2023-12-29', 20.63, 5], ['2024-03-29', 21.68, 5], ['2024-06-28', 26.09, 5], ['2024-09-30', 50.00, 5],
+  ['2024-12-31', 34.70, 6], ['2025-03-31', 39.24, 7], ['2025-06-30', 47.88, 7], ['2025-09-30', 67.01, 7],
+  ['2025-10-31', 57.14, 7], ['2025-11-28', 55.32, 7], ['2025-12-31', 52.14, 7], ['2026-01-30', 57.89, 7],
+  ['2026-02-27', 53.80, 7], ['2026-03-31', 48.14, 7], ['2026-04-30', 52.39, 7], ['2026-05-29', 47.89, 7],
+  ['2026-06-30', 40.23, 7], ['2026-07-31', 56.67, 7], ['2026-09-30', 34.29, 7], ['2026-10-16', 30.78, 7],
+];
+
+function renderHist(o) {
+  const TH = o.data, S = o.sfx;
+  const C = !!o.compact;                       // 窄版（双栏并排）
+  const W = o.w || 944, H = o.h || 268;
+  const ml = o.ml ?? (C ? 25 : 36), mr = o.mr ?? (C ? 16 : 68);
+  const mt = o.mt ?? (C ? 24 : 16), mb = o.mb ?? (C ? 22 : 26);
+  const fA = C ? 10 : 11;                    // 刻度字号
+  const fL = C ? 10.5 : 11.5;                     // 标注字号
+  const t0 = Date.parse(TH[0][0]), t1 = Date.parse(TH[TH.length - 1][0]);
+  const X = d => ml + (Date.parse(d) - t0) / (t1 - t0) * (W - ml - mr);
+  const Y = v => mt + (100 - v) / 100 * (H - mt - mb);
+  const B = Y(0);
+  const pts = TH.map(([d, v, n]) => ({ d, v, n, x: X(d), y: Y(v) }));
+
+  let s = `<defs>
+    <linearGradient id="hArea-${S}" gradientUnits="userSpaceOnUse" x1="0" y1="${Y(100)}" x2="0" y2="${B}">
+      <stop offset="0"    stop-color="#d4372f" stop-opacity=".26"/>
+      <stop offset=".42"  stop-color="#f0b429" stop-opacity=".19"/>
+      <stop offset=".72"  stop-color="#34b37e" stop-opacity=".13"/>
+      <stop offset="1"    stop-color="#3d8bd9" stop-opacity=".08"/>
+    </linearGradient>
+    <linearGradient id="hLine-${S}" gradientUnits="userSpaceOnUse" x1="0" y1="${Y(100)}" x2="0" y2="${B}">
+      <stop offset="0"    stop-color="#d4372f"/>
+      <stop offset=".30"  stop-color="#ea6a3a"/>
+      <stop offset=".52"  stop-color="#f0b429"/>
+      <stop offset=".72"  stop-color="#3aa9a0"/>
+      <stop offset="1"    stop-color="#3d8bd9"/>
+    </linearGradient>
+  </defs>`;
+
+  /* 温区底色 */
+  s += `<rect x="${ml}" y="${Y(100)}" width="${W - ml - mr}" height="${Y(50) - Y(100)}" fill="#d4372f" opacity=".028"/>`;
+  s += `<rect x="${ml}" y="${Y(30)}" width="${W - ml - mr}" height="${Y(0) - Y(30)}" fill="#3d8bd9" opacity=".05"/>`;
+
+  /* 年份竖线 + 网格 */
+  const step = C ? 2 : 1;
+  for (let y = 2017; y <= 2026; y += step) {
+    const tx = X(`${y}-01-01`);
+    if (tx > W - mr - 8) continue;
+    const first = tx < ml + 12;
+    const lx = first ? ml - 2 : tx;
+    s += `<line x1="${tx.toFixed(1)}" y1="${mt}" x2="${tx.toFixed(1)}" y2="${B}" stroke="#f6f7f9" stroke-width="1"/>`;
+    s += `<text x="${lx.toFixed(1)}" y="${B + (C ? 15 : 17)}" text-anchor="${first ? 'start' : 'middle'}"
+            font-size="${fA}" fill="#b3bbc5">${y}</text>`;
+  }
+  [0, 20, 40, 60, 80, 100].forEach(v => {
+    s += `<line x1="${ml}" y1="${Y(v)}" x2="${W - mr}" y2="${Y(v)}" stroke="#f2f4f6" stroke-width="1"/>`;
+    s += `<text x="${ml - (C ? 6 : 9)}" y="${Y(v) + 3.5}" text-anchor="end" font-size="${fA}" fill="#b8c0c9"
+            font-family="ui-monospace,Menlo,monospace">${v}</text>`;
+  });
+
+  /* 30 / 50 参考线 */
+  [[50, C ? '50°卖' : '50° 卖出线', '#d4372f'], [30, C ? '30°买' : '30° 买入线', '#2b7fd4']].forEach(([v, txt, c]) => {
+    s += `<line x1="${ml}" y1="${Y(v)}" x2="${W - mr}" y2="${Y(v)}" stroke="${c}"
+            stroke-width="1" stroke-dasharray="4 3.5" opacity=".45"/>`;
+    if (!C) {
+      s += `<text x="${W - mr + 7}" y="${Y(v) + 3.5}" font-size="${fA}" fill="${c}" opacity=".75"
+              letter-spacing=".2">${txt}</text>`;
+    }
+  });
+
+  /* 曲线（Catmull-Rom 转贝塞尔，轻度平滑） */
+  const k = 0.32;
+  let dp = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[Math.max(0, i - 1)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(pts.length - 1, i + 2)];
+    const c1x = p1.x + (p2.x - p0.x) * k, c1y = p1.y + (p2.y - p0.y) * k;
+    const c2x = p2.x - (p3.x - p1.x) * k, c2y = p2.y - (p3.y - p1.y) * k;
+    dp += ` C ${c1x.toFixed(1)} ${c1y.toFixed(1)} ${c2x.toFixed(1)} ${c2y.toFixed(1)} ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+  }
+  s += `<path d="${dp} L ${pts[pts.length - 1].x.toFixed(1)} ${B} L ${pts[0].x.toFixed(1)} ${B} Z" fill="url(#hArea-${S})"/>`;
+  s += `<path d="${dp}" fill="none" stroke="url(#hLine-${S})" stroke-width="${C ? 1.6 : 1.9}" stroke-linecap="round" stroke-linejoin="round"/>`;
+
+  /* 极值与当前点（窄版按位置自适应锚点，避免出框） */
+  const hi = pts.reduce((a, b) => b.v > a.v ? b : a);
+  const lo = pts.reduce((a, b) => b.v < a.v ? b : a);
+  const last = pts[pts.length - 1];
+  const edge = C ? 62 : 96;
+  const pos = (p, up) => {
+    const nearR = p.x > W - mr - edge, nearL = p.x < ml + edge;
+    if (up) return { a: nearR ? 'end' : nearL ? 'start' : 'middle', x: nearR ? p.x - 6 : nearL ? p.x + 6 : p.x, y: p.y - 9 };
+    return { a: nearR ? 'end' : 'start', x: nearR ? p.x - 7 : p.x + 7, y: Math.min(p.y + 15, B - 3) };
+  };
+  const ph = pos(hi, true), pl = pos(lo, false);
+  s += `<circle cx="${hi.x.toFixed(1)}" cy="${hi.y.toFixed(1)}" r="3.2" fill="#d4372f"/>`;
+  s += `<text x="${ph.x.toFixed(1)}" y="${ph.y.toFixed(1)}" text-anchor="${ph.a}" font-size="${fL}"
+          fill="#c9584f" stroke="#fff" stroke-width="2.6" paint-order="stroke" stroke-linejoin="round">${f2(hi.v)}°${C ? ' 最高' : ' 十年最高'}</text>`;
+  s += `<circle cx="${lo.x.toFixed(1)}" cy="${lo.y.toFixed(1)}" r="3.2" fill="#2b7fd4"/>`;
+  s += `<text x="${pl.x.toFixed(1)}" y="${pl.y.toFixed(1)}" text-anchor="${pl.a}" font-size="${fL}"
+          fill="#5b8fc4" stroke="#fff" stroke-width="2.6" paint-order="stroke" stroke-linejoin="round">${f2(lo.v)}°${C ? ' 最低' : ' 十年最低'}</text>`;
+
+  const below = last.y + 18 <= B - 2;
+  s += `<circle cx="${last.x.toFixed(1)}" cy="${last.y.toFixed(1)}" r="${C ? 5.6 : 6.4}" fill="#fff" opacity=".9"/>`;
+  s += `<circle cx="${last.x.toFixed(1)}" cy="${last.y.toFixed(1)}" r="3.4" fill="${tempColor(last.v)}"/>`;
+  s += `<text x="${(last.x - 1).toFixed(1)}" y="${(below ? last.y + 17 : last.y - 12).toFixed(1)}" text-anchor="end" font-size="${C ? 11.5 : 12.5}"
+          font-weight="600" fill="${tempColor(last.v)}" stroke="#fff" stroke-width="3" paint-order="stroke"
+          stroke-linejoin="round">${f2(last.v)}°</text>`;
+
+  /* 交互层 */
+  s += `<line id="hGuide-${S}" y1="${mt}" y2="${B}" stroke="#c8cfd8" stroke-width="1" stroke-dasharray="3 3" opacity="0"/>`;
+  s += `<circle id="hDot-${S}" r="4.2" fill="#fff" stroke="${tempColor(last.v)}" stroke-width="2" opacity="0"/>`;
+  s += `<rect x="${ml}" y="${mt}" width="${W - ml - mr}" height="${B - mt}" fill="transparent" id="hHit-${S}"/>`;
+
+  document.getElementById(o.svgId).innerHTML = s;
+
+  /* 顶部小统计 */
+  const mean = pts.reduce((a, b) => a + b.v, 0) / pts.length;
+  const hot = pts.filter(p => p.v >= 50).length, cold = pts.filter(p => p.v < 30).length;
+  document.getElementById(o.barId).innerHTML = C
+    ? `<span class="hi">最高<b>${f2(hi.v)}°</b><i>${hi.d.slice(0, 7)}</i></span>
+       <span class="lo">最低<b>${f2(lo.v)}°</b><i>${lo.d.slice(0, 7)}</i></span>
+       <span>均值<b>${f2(mean)}°</b></span>
+       <span>≥50°<b>${hot}</b> / &lt;30°<b>${cold}</b></span>`
+    : `<span class="hi">十年最高<b>${f2(hi.v)}°</b><span style="font-size:10.5px"> ${hi.d.slice(0, 7)}</span></span>
+       <span class="lo">十年最低<b>${f2(lo.v)}°</b><span style="font-size:10.5px"> ${lo.d.slice(0, 7)}</span></span>
+       <span>十年均值<b>${f2(mean)}°</b></span>
+       <span>50° 以上<b>${hot}</b> 次 / 30° 以下<b>${cold}</b> 次<span style="font-size:10.5px">（共 ${pts.length} 个采样点）</span></span>`;
+
+  /* 悬停 */
+  const svg = document.getElementById(o.svgId);
+  const tip = document.getElementById(o.tipId);
+  const guide = svg.querySelector(`#hGuide-${S}`);
+  const dot = svg.querySelector(`#hDot-${S}`);
+  const hit = svg.querySelector(`#hHit-${S}`);
+
+  hit.addEventListener('mousemove', e => {
+    const r = svg.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width * W;
+    let best = pts[0], bd = 1e9;
+    pts.forEach(p => { const d = Math.abs(p.x - px); if (d < bd) { bd = d; best = p; } });
+    guide.setAttribute('x1', best.x); guide.setAttribute('x2', best.x);
+    guide.setAttribute('opacity', '.9');
+    dot.setAttribute('cx', best.x); dot.setAttribute('cy', best.y);
+    dot.setAttribute('stroke', tempColor(best.v));
+    dot.setAttribute('opacity', '1');
+    tip.style.opacity = '1';
+    tip.style.left = (C ? Math.max(16, Math.min(84, best.x / W * 100)) : best.x / W * 100) + '%';
+    tip.style.top = (best.y / H * 100) + '%';
+    tip.innerHTML = `<b style="color:${tempColor(best.v)}">${f2(best.v)}°</b><span>${best.d}</span>`
+      + (best.n ? `<span>${best.n} 只标的</span>` : '');
+  });
+  hit.addEventListener('mouseleave', () => {
+    guide.setAttribute('opacity', '0');
+    dot.setAttribute('opacity', '0');
+    tip.style.opacity = '0';
+  });
+}
+
+renderHist({ data: TH,  sfx: 'a', w: 460, h: 300, compact: true, svgId: 'histSvg',  barId: 'histBar',  tipId: 'histTip'  });
+renderHist({ data: THH, sfx: 'h', w: 460, h: 300, compact: true, svgId: 'histSvg2', barId: 'histBar2', tipId: 'histTip2' });
+</script>
+</body>
+</html>

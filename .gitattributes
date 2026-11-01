@@ -1,0 +1,8 @@
+# 统一用 LF 入库，Windows / macOS / Linux 三端 checkout 结果一致
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
