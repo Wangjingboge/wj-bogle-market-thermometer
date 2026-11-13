@@ -13,6 +13,9 @@ Skill 平台只接受**两级目录**（根目录 / 二级目录 / 文件），�
   - __pycache__ / .git / node_modules / dist / data/backup / data/inbox / data/archive
     （backup、inbox 是运行时产物；archive 是已 migrate 进 market-data.json 的历史快照）
   - *.pyc / *.tmp / audit.log / .DS_Store / Thumbs.db
+  - .gitattributes / .gitignore / .gitmodules / .editorconfig
+    （平台校验会直接拒收 .gitattributes：不允许的文件类型）
+  - LICENSE（无扩展名，同样会被类型校验拦；许可声明已写在 README.md 的 License 段）
 """
 import argparse
 import os
@@ -28,7 +31,9 @@ SKIP_DIRS = {
     "__pycache__", ".git", "node_modules", "dist", ".idea", ".vscode",
     "backup", "inbox", "archive",
 }
-SKIP_FILES = {"audit.log", ".DS_Store", "Thumbs.db", "desktop.ini"}
+SKIP_FILES = {"audit.log", ".DS_Store", "Thumbs.db", "desktop.ini",
+              ".gitattributes", ".gitignore", ".gitmodules", ".editorconfig",
+              "LICENSE", "LICENSE.txt", "LICENCE"}
 SKIP_EXT = {".pyc", ".pyo", ".tmp", ".log.bak"}
 
 
