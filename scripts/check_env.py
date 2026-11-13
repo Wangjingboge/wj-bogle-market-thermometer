@@ -4,10 +4,11 @@
 检查项：
   1) 运行环境（Python 版本、node、playwright-core、浏览器，见 scripts/runtime.py）
   2) 必需文件是否齐全
-  3) 标的清单：44 个、代码不重复、ETF 格式、924 基准价为正
+  3) 标的清单：56 个（A股 37 + 港股 7 + 美股 12）、代码不重复、ETF 格式、924 基准价为正
   4) SKILL.md「标的清单」表 与 scripts/targets.py 是否一致（写死两处，最怕改一处忘另一处）
   5) 历史库 JSON 结构与单调性；最近一份 snapshot 的等权均值是否等于历史库末点（硬规则 7）
-  6) 模板占位符是否还在（build.py 靠它注入数据）
+  6) 明细库 data/market-data.json：日期键、代码归属、覆盖度、末点=等权均值
+  7) 模板占位符是否还在（build.py 靠它注入数据）
 
 用法：
     python scripts/check_env.py
@@ -74,9 +75,11 @@ def check_files():
         "references/rendering.md",
         "references/export.md",
         "data/temperature-history.json",
+        "data/us-history.json",
         "scripts/targets.py",
         "scripts/runtime.py",
         "scripts/fetch.py",
+        "scripts/update.py",
         "scripts/build.py",
         "scripts/history.js",
         "scripts/export_long.js",
@@ -106,21 +109,22 @@ def check_files():
 def check_targets(t):
     if t is None:
         return
-    n_ind, n_wide, n_hk = len(t.INDUSTRIES), len(t.WIDE), len(t.HK)
-    if (n_ind, n_wide, n_hk) != (31, 6, 7):
-        fail("标的数量不对：行业 %d / 宽基 %d / 港股 %d，应为 31 / 6 / 7" % (n_ind, n_wide, n_hk))
+    n_ind, n_wide, n_hk, n_us = len(t.INDUSTRIES), len(t.WIDE), len(t.HK), len(t.US)
+    if (n_ind, n_wide, n_hk, n_us) != (31, 6, 7, 12):
+        fail("标的数量不对：行业 %d / 宽基 %d / 港股 %d / 美股 %d，应为 31 / 6 / 7 / 12"
+             % (n_ind, n_wide, n_hk, n_us))
     else:
-        ok("标的数量 31 行业 + 6 宽基 + 7 港股 = 44")
+        ok("标的数量 31 行业 + 6 宽基 + 7 港股 + 12 美股 = 56")
 
     codes = t.ALL_CODES
     dup = sorted({c for c in codes if codes.count(c) > 1})
     if dup:
         fail("代码重复：%s" % ", ".join(dup))
     else:
-        ok("44 个代码无重复")
+        ok("%d 个代码无重复" % len(codes))
 
     bad_etf = []
-    for name, code, etf, base in t.INDUSTRIES + t.WIDE + t.HK:
+    for name, code, etf, base in t.INDUSTRIES + t.WIDE + t.HK + t.US:
         if etf and not re.fullmatch(r"\d{6}", str(etf)):
             bad_etf.append("%s(%s)->%s" % (name, code, etf))
         if not (isinstance(base, (int, float)) and base > 0):
@@ -152,8 +156,8 @@ def check_skill_table(t):
         etf = "" if etf in ("—", "-", "") else etf.strip("`")
         rows[code] = dict(name=name, etf=etf, base=base, group=group)
 
-    if len(rows) != 44:
-        fail("SKILL.md 标的清单解析到 %d 行，应为 44 行（表被改坏了？）" % len(rows))
+    if len(rows) != 56:
+        fail("SKILL.md 标的清单解析到 %d 行，应为 56 行（表被改坏了？）" % len(rows))
         return
 
     tgt = t.by_code()
@@ -167,11 +171,15 @@ def check_skill_table(t):
             diff.append("%s 名称 %r != %r" % (code, r["name"], info["name"]))
         if r["etf"] != (info["etf"] or ""):
             diff.append("%s ETF %r != %r" % (code, r["etf"], info["etf"]))
-        try:
-            if abs(float(r["base"]) - float(info["base"])) > 0.005:
-                diff.append("%s 924 基准 %s != %s" % (code, r["base"], info["base"]))
-        except ValueError:
-            diff.append("%s 924 基准不是数字：%r" % (code, r["base"]))
+        if info["base"] is None:
+            if r["base"] not in ("—", "-", ""):
+                diff.append("%s 基准应为「—」，实际 %r" % (code, r["base"]))
+        else:
+            try:
+                if abs(float(r["base"]) - float(info["base"])) > 0.005:
+                    diff.append("%s 924 基准 %s != %s" % (code, r["base"], info["base"]))
+            except ValueError:
+                diff.append("%s 924 基准不是数字：%r" % (code, r["base"]))
         if r["group"] != info["group"]:
             diff.append("%s 分组 %r != %r" % (code, r["group"], info["group"]))
     extra = set(rows) - set(tgt)
@@ -182,7 +190,7 @@ def check_skill_table(t):
         fail("SKILL.md 标的清单与 targets.py 不一致：\n    " + "\n    ".join(diff[:12])
              + ("\n    ……共 %d 处" % len(diff) if len(diff) > 12 else ""))
     else:
-        ok("SKILL.md 标的清单与 targets.py 完全一致（44 行逐项比对）")
+        ok("SKILL.md 标的清单与 targets.py 完全一致（56 行逐项比对）")
 
 
 def check_history(t):
@@ -194,7 +202,7 @@ def check_history(t):
     except Exception as e:
         fail("历史库 JSON 解析失败：%s" % e)
         return
-    for key, min_len in (("a", 2), ("hk", 3)):
+    for key, min_len in (("a", 2), ("hk", 3), ("us", 2)):
         s = h.get("series", {}).get(key)
         if not s:
             fail("历史库缺少 series.%s" % key)
@@ -214,43 +222,99 @@ def check_history(t):
     return h
 
 
-def check_latest_snapshot(t, h):
-    """硬规则 7：末点必须等于当天快照的等权平均。"""
-    if t is None or not h:
-        return
-    snaps = sorted(f for f in os.listdir(SKILL)
-                   if re.fullmatch(r"snapshot_\d{4}-\d{2}-\d{2}\.json", f))
-    if not snaps:
-        warn("目录下没有 snapshot_*.json（正常，取数后才会有）")
-        return
-    latest = snaps[-1]
-    d = latest[len("snapshot_"):-len(".json")]
-    ok("最近一份快照：%s" % latest)
+def check_market_data(t, h):
+    """明细库 data/market-data.json：结构、覆盖、以及硬规则 7（末点 = 当天等权均值）。"""
+    path = os.path.join(SKILL, "data/market-data.json")
+    if not os.path.exists(path):
+        warn("没有 data/market-data.json（跑 `python scripts/update.py migrate` 或 plan 后会生成）")
+        return None
     try:
-        snap = json.load(open(os.path.join(SKILL, latest), encoding="utf-8"))["snapshot"]
+        db = json.load(open(path, encoding="utf-8"))
     except Exception as e:
-        fail("%s 解析失败：%s" % (latest, e))
-        return
-    missing = [c for c in t.ALL_CODES if c not in snap]
-    missing_val = [c for c in t.ALL_CODES if c in snap and snap[c].get("t") is None]
-    if missing:
-        fail("%s 缺 %d 个标的：%s" % (latest, len(missing), ", ".join(missing[:6])))
-        return
-    if missing_val:
-        fail("%s 有 %d 个标的温度为 None：%s" % (latest, len(missing_val), ", ".join(missing_val[:6])))
-        return
+        fail("market-data.json 解析失败：%s" % e)
+        return None
+    dates = db.get("dates") or {}
+    if not dates:
+        warn("明细库是空的")
+        return None
+    total = len(t.ALL_CODES)
+    known = t.by_code()
 
-    for key, codes in (("a", t.A_CODES), ("hk", t.HK_CODES)):
-        mean = sum(snap[c]["t"] for c in codes) / len(codes)
+    bad_keys = [d for d in dates if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", d)]
+    if bad_keys:
+        fail("明细库有非法日期键：%s" % ", ".join(bad_keys[:5]))
+        return None
+    alien = sorted({c for rows in dates.values() for c in rows if c not in known})
+    if alien:
+        fail("明细库里有不在标的清单的代码：%s" % ", ".join(alien[:6]))
+        return None
+
+    ordered = sorted(dates)
+    partial = []
+    for d in ordered:
+        rows = dates[d]
+        full = [c for c in t.ALL_CODES
+                if all(rows.get(c, {}).get(k) is not None
+                       for k in ("chg", "ytd", "close", "pe", "t"))]
+        if len(full) < total:
+            partial.append("%s(%d/%d)" % (d, len(full), total))
+    ok("明细库：%d 个交易日，%s → %s" % (len(ordered), ordered[0], ordered[-1]))
+    if partial:
+        warn("不完整的日子（历史遗留可接受）：%s%s"
+             % (", ".join(partial[:4]), " 等 %d 天" % len(partial) if len(partial) > 4 else ""))
+    else:
+        ok("每个交易日都是 %d/%d，明细齐" % (total, total))
+
+    if t is None or not h:
+        return db
+
+    # 硬规则 7：只用「最近一个齐全的日子」比
+    complete = [d for d in ordered
+                if all(all(dates[d].get(c, {}).get(k) is not None
+                           for k in ("chg", "ytd", "close", "pe", "t"))
+                       for c in t.ALL_CODES)]
+    if not complete:
+        warn("没有一天是 %d/%d 齐全的，跳过等权均值校验" % (total, total))
+        return db
+    d = complete[-1]
+    rows = dates[d]
+    for key, codes in (("a", t.A_CODES), ("hk", t.HK_CODES), ("us", t.US_CODES)):
+        mean = sum(rows[c]["t"] for c in codes) / len(codes)
         pts = [p for p in h["series"][key] if p[0] == d]
         if not pts:
-            warn("历史库还没有 %s 这个点（%s），先跑 build.py 再复核" % (d, key))
+            warn("历史库还没有 %s 这个点（%s），先跑 build 再复核" % (d, key))
             continue
         if abs(pts[-1][1] - mean) > 0.01:
-            fail("%s 末点 %.2f 与快照等权均值 %.2f 不一致（硬规则 7）"
-                 % (key, pts[-1][1], mean))
+            fail("%s %s 末点 %.2f 与明细库等权均值 %.2f 不一致（硬规则 7）"
+                 % (key, d, pts[-1][1], mean))
         else:
-            ok("%s 末点 %.2f = 快照等权均值 %.2f" % (key, pts[-1][1], mean))
+            ok("%s %s 温度 %.2f = 明细库等权均值 %.2f" % (key, d, pts[-1][1], mean))
+    return db
+
+
+def check_us_history():
+    path = os.path.join(SKILL, "data/us-history.json")
+    if not os.path.exists(path):
+        return
+    try:
+        db = json.load(open(path, encoding="utf-8"))
+    except Exception as e:
+        fail("us-history.json 解析失败：%s" % e)
+        return
+    pts = db.get("points") or []
+    if len(pts) < 3:
+        fail("us-history.json 只有 %d 个点，画不出走势" % len(pts))
+        return
+    dates = [p[0] for p in pts]
+    if dates != sorted(dates):
+        fail("us-history.json 的 points 日期不是升序")
+    if len(set(dates)) != len(dates):
+        fail("us-history.json 的 points 有重复日期")
+    bad = [p for p in pts if not (isinstance(p[1], (int, float)) and 0 <= p[1] <= 100)]
+    if bad:
+        fail("us-history.json 有温度越界（0–100）：%s" % bad[:3])
+        return
+    ok("美股十年回溯：%d 个点，%s → %s" % (len(pts), dates[0], dates[-1]))
 
 
 def check_template():
@@ -258,13 +322,13 @@ def check_template():
     if not os.path.exists(path):
         return
     html = open(path, encoding="utf-8").read()
-    need = ["const A = [", "const H = [", "const TH = [", "const THH = [",
+    need = ["const A = [", "const H = [", "const U = [", "const TH = [", "const THH = [", "const THU = [",
             "/* ───────── 卡片 ───────── */"]
     miss = [s for s in need if s not in html]
     if miss:
         fail("模板缺少 build.py 依赖的占位符：%s" % ", ".join(miss))
     else:
-        ok("模板占位符齐全（A / H / TH / THH / 卡片注释）")
+        ok("模板占位符齐全（A / H / U / TH / THH / THU / 卡片注释）")
 
 
 def main():
@@ -273,7 +337,8 @@ def main():
     check_targets(t)
     check_skill_table(t)
     h = check_history(t)
-    check_latest_snapshot(t, h)
+    check_market_data(t, h)
+    check_us_history()
     check_template()
 
     print("=" * 66)

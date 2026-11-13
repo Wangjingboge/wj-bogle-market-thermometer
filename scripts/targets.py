@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""单一事实源：44 个标的的代码 / 页面名 / 分组 / 相关 ETF / 924 基准收盘价。
+"""单一事实源：56 个标的的代码 / 页面名 / 分组 / 相关 ETF / 924 基准收盘价。
 
 - base 是 2024-09-24 收盘价（一次性取数，永久固化，勿再重复取 kline）。
-- 以后改标的清单只改这里；快照串、44 问、build 的数据表都从这里生成。
+- 以后改标的清单只改这里；快照串、56 问、build 的数据表都从这里生成。
 """
 DATE_BASE = "2024-09-24"
 
@@ -62,9 +62,32 @@ HK = [
     ("港股汽车",    "HSSCAM.HI", "159323", 1961.58),
 ]
 
+# 美股 12 只：标普500 + 纳斯达克100 + 标普500 行业指数（GICS 一级）
+# 口径说明：GICS 现有一级行业 11 个，其中「能源」在 Wind 无 PE(TTM) 十年序列
+#          （S5ENRS.SPI / SP500-1010.SPI 均取不到估值），故行业位由「房地产」补足，
+#          行业数仍为 10 个。base 同样是 2024-09-24 收盘（美东时间当日收盘）。
+US = [
+    ("标普500",     "SPX.GI",      "513500", 5732.93),
+    ("纳斯达克100", "NDX.GI",      "513100", 19944.84),
+    ("信息技术",    "S5INFT.SPI",  "",       4360.40),
+    ("医疗保健",    "S5HLTH.SPI",  "",       1797.38),
+    ("金融",        "SPF.SPI",     "",       749.62),
+    ("可选消费",    "S5COND.SPI",  "",       1615.03),
+    ("日常消费",    "S5CONS.SPI",  "",       887.83),
+    ("工业",        "S5INDU.SPI",  "",       1139.47),
+    ("通讯服务",    "S5TELS.SPI",  "",       309.75),
+    ("材料",        "S5MATR.SPI",  "",       604.57),
+    ("公用事业",    "S5UTIL.SPI",  "",       405.21),
+    ("房地产",      "S5RLST.SPI",  "",       281.88),
+]
+
+# 前两只是宽基，其余是行业 —— 供表格分组标签用
+US_WIDE = {"SPX.GI", "NDX.GI"}
+
 A_CODES = [c for _, c, _, _ in INDUSTRIES] + [c for _, c, _, _ in WIDE]
 HK_CODES = [c for _, c, _, _ in HK]
-ALL_CODES = A_CODES + HK_CODES
+US_CODES = [c for _, c, _, _ in US]
+ALL_CODES = A_CODES + HK_CODES + US_CODES
 
 def by_code():
     d = {}
@@ -74,4 +97,6 @@ def by_code():
         d[c] = dict(name=n, group="宽基", etf=e, base=b)
     for n, c, e, b in HK:
         d[c] = dict(name=n, group="港股", etf=e, base=b)
+    for n, c, e, b in US:
+        d[c] = dict(name=n, group="美股", etf=e, base=b)
     return d

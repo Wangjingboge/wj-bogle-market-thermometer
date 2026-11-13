@@ -1,0 +1,200 @@
+{
+ "schema": 1,
+ "updated": "2026-11-12",
+ "method": "每个采样点取该指数当日 PE(TTM) 在其近十年的分位，12 只等权平均（缺失年份少算几只）",
+ "sample": "2016–2025 每年最后一个交易日，＋当期日更点",
+ "years": {
+  "2016": {
+   "SPX.GI": 35.0318,
+   "NDX.GI": 19.5462,
+   "S5INFT.SPI": null,
+   "S5HLTH.SPI": null,
+   "SPF.SPI": 55.3742,
+   "S5COND.SPI": 0.4379,
+   "S5CONS.SPI": 23.4076,
+   "S5INDU.SPI": 3.8615,
+   "S5TELS.SPI": 14.6497,
+   "S5MATR.SPI": 88.5748,
+   "S5UTIL.SPI": 89.5303,
+   "S5RLST.SPI": 3.7818
+  },
+  "2017": {
+   "SPX.GI": 53.1449,
+   "NDX.GI": 25.1194,
+   "S5INFT.SPI": 29.5382,
+   "S5HLTH.SPI": 48.1688,
+   "SPF.SPI": 92.6354,
+   "S5COND.SPI": 21.7357,
+   "S5CONS.SPI": 17.1178,
+   "S5INDU.SPI": 44.586,
+   "S5TELS.SPI": 16.2022,
+   "S5MATR.SPI": 59.9124,
+   "S5UTIL.SPI": 92.7946,
+   "S5RLST.SPI": 24.6019
+  },
+  "2018": {
+   "SPX.GI": 2.1497,
+   "NDX.GI": 3.7022,
+   "S5INFT.SPI": 4.4984,
+   "S5HLTH.SPI": 67.7548,
+   "SPF.SPI": 16.043,
+   "S5COND.SPI": 22.3328,
+   "S5CONS.SPI": 1.7516,
+   "S5INDU.SPI": 9.992,
+   "S5TELS.SPI": 15.9236,
+   "S5MATR.SPI": 8.3997,
+   "S5UTIL.SPI": 11.1465,
+   "S5RLST.SPI": 42.1975
+  },
+  "2019": {
+   "SPX.GI": 44.7054,
+   "NDX.GI": 38.7341,
+   "S5INFT.SPI": 33.6783,
+   "S5HLTH.SPI": 58.8774,
+   "SPF.SPI": 43.5908,
+   "S5COND.SPI": 37.0223,
+   "S5CONS.SPI": 98.0494,
+   "S5INDU.SPI": 26.035,
+   "S5TELS.SPI": 66.8392,
+   "S5MATR.SPI": 46.6959,
+   "S5UTIL.SPI": 54.6975,
+   "S5RLST.SPI": 38.6146
+  },
+  "2020": {
+   "SPX.GI": 96.8551,
+   "NDX.GI": 95.2229,
+   "S5INFT.SPI": 69.9841,
+   "S5HLTH.SPI": 54.9761,
+   "SPF.SPI": 95.5016,
+   "S5COND.SPI": 96.7357,
+   "S5CONS.SPI": 36.7436,
+   "S5INDU.SPI": 93.2325,
+   "S5TELS.SPI": 92.7548,
+   "S5MATR.SPI": 99.4029,
+   "S5UTIL.SPI": 45.7803,
+   "S5RLST.SPI": 81.0908
+  },
+  "2021": {
+   "SPX.GI": 67.3567,
+   "NDX.GI": 72.4522,
+   "S5INFT.SPI": 57.6035,
+   "S5HLTH.SPI": 57.7229,
+   "SPF.SPI": 16.2022,
+   "S5COND.SPI": 87.7389,
+   "S5CONS.SPI": 81.2102,
+   "S5INDU.SPI": 86.3455,
+   "S5TELS.SPI": 73.6465,
+   "S5MATR.SPI": 23.129,
+   "S5UTIL.SPI": 90.2866,
+   "S5RLST.SPI": 93.7102
+  },
+  "2022": {
+   "SPX.GI": 7.6433,
+   "NDX.GI": 8.4395,
+   "S5INFT.SPI": 15.2866,
+   "S5HLTH.SPI": 25.6768,
+   "SPF.SPI": 55.0955,
+   "S5COND.SPI": 23.0892,
+   "S5CONS.SPI": 59.4745,
+   "S5INDU.SPI": 56.3296,
+   "S5TELS.SPI": 19.3073,
+   "S5MATR.SPI": 4.1401,
+   "S5UTIL.SPI": 51.4729,
+   "S5RLST.SPI": 5.0955
+  },
+  "2023": {
+   "SPX.GI": 53.4236,
+   "NDX.GI": 77.2293,
+   "S5INFT.SPI": 86.7038,
+   "S5HLTH.SPI": 50.1592,
+   "SPF.SPI": 13.2564,
+   "S5COND.SPI": 61.6242,
+   "S5CONS.SPI": 30.9315,
+   "S5INDU.SPI": 34.6338,
+   "S5TELS.SPI": 79.9363,
+   "S5MATR.SPI": 35.7484,
+   "S5UTIL.SPI": 28.1847,
+   "S5RLST.SPI": 61.3854
+  },
+  "2024": {
+   "SPX.GI": 81.0908,
+   "NDX.GI": 94.7054,
+   "S5INFT.SPI": 95.7006,
+   "S5HLTH.SPI": 91.6401,
+   "SPF.SPI": 64.3312,
+   "S5COND.SPI": 65.4061,
+   "S5CONS.SPI": 49.7611,
+   "S5INDU.SPI": 65.8439,
+   "S5TELS.SPI": 69.785,
+   "S5MATR.SPI": 60.629,
+   "S5UTIL.SPI": 28.8615,
+   "S5RLST.SPI": 74.164
+  },
+  "2025": {
+   "SPX.GI": 87.8583,
+   "NDX.GI": 83.7182,
+   "S5INFT.SPI": 88.8933,
+   "S5HLTH.SPI": 60.1513,
+   "SPF.SPI": 89.8089,
+   "S5COND.SPI": 74.801,
+   "S5CONS.SPI": 86.0669,
+   "S5INDU.SPI": 74.7611,
+   "S5TELS.SPI": 75.5175,
+   "S5MATR.SPI": 85.3105,
+   "S5UTIL.SPI": 49.2436,
+   "S5RLST.SPI": 82.0064
+  }
+ },
+ "points": [
+  [
+   "2016-12-29",
+   33.42,
+   10
+  ],
+  [
+   "2017-12-28",
+   43.8,
+   12
+  ],
+  [
+   "2018-12-27",
+   17.16,
+   12
+  ],
+  [
+   "2019-12-30",
+   48.96,
+   12
+  ],
+  [
+   "2020-12-30",
+   79.86,
+   12
+  ],
+  [
+   "2021-12-30",
+   67.28,
+   12
+  ],
+  [
+   "2022-12-29",
+   27.59,
+   12
+  ],
+  [
+   "2023-12-28",
+   51.1,
+   12
+  ],
+  [
+   "2024-12-30",
+   70.16,
+   12
+  ],
+  [
+   "2025-12-30",
+   78.18,
+   12
+  ]
+ ]
+}

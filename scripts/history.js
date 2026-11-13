@@ -19,12 +19,13 @@ function die(msg) { console.error(msg); process.exit(1); }
 
 function load(file) {
   if (!fs.existsSync(file)) {
-    return { updated: null, series: { a: [], hk: [] } };
+    return { updated: null, series: { a: [], hk: [], us: [] } };
   }
   const j = JSON.parse(fs.readFileSync(file, 'utf8'));
   j.series = j.series || {};
   j.series.a = j.series.a || [];
   j.series.hk = j.series.hk || [];
+  j.series.us = j.series.us || [];
   return j;
 }
 
@@ -32,7 +33,7 @@ function save(file, db) {
   const dir = path.dirname(path.resolve(file));
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
   // 归一：去重（后写覆盖）、按日期升序
-  for (const k of ['a', 'hk']) {
+  for (const k of ['a', 'hk', 'us']) {
     const map = new Map();
     for (const row of db.series[k]) {
       if (!Array.isArray(row) || row.length < 2) continue;
@@ -46,13 +47,13 @@ function save(file, db) {
       .sort((x, y) => x[0].localeCompare(y[0]))
       .map(r => (r[2] === undefined ? [r[0], r[1]] : [r[0], r[1], r[2]]));
   }
-  const last = ['a', 'hk'].map(k => db.series[k][db.series[k].length - 1]?.[0]).filter(Boolean).sort().pop();
+  const last = ['a', 'hk', 'us'].map(k => db.series[k][db.series[k].length - 1]?.[0]).filter(Boolean).sort().pop();
   db.updated = last || db.updated;
   // 一个点一行，方便人工复核和 git diff
   const text = '{\n'
     + ` "updated": ${JSON.stringify(db.updated)},\n`
     + ' "series": {\n'
-    + ['a', 'hk'].map(k =>
+    + ['a', 'hk', 'us'].map(k =>
         `  "${k}": [\n` + db.series[k].map(r => '   ' + JSON.stringify(r)).join(',\n') + '\n  ]'
       ).join(',\n')
     + '\n }\n}\n';
@@ -98,7 +99,7 @@ else if (cmd === 'add') {
   if (!file || !key || !date || value === undefined) {
     die('usage: node history.js add <history.json> <a|hk> <YYYY-MM-DD> <温度> [标的数]');
   }
-  if (!['a', 'hk'].includes(key)) die('系列只能是 a 或 hk');
+  if (!['a', 'hk', 'us'].includes(key)) die('系列只能是 a / hk / us');
   const db = load(file);
   db.series[key].push([date, Number(value), n === undefined ? undefined : Number(n)]);
   const out = save(file, db);
@@ -110,9 +111,9 @@ else if (cmd === 'print') {
   const [file, key] = args;
   if (!file) die('usage: node history.js print <history.json> [a|hk]');
   const db = load(file);
-  const keys = key ? [key] : ['a', 'hk'];
+  const keys = key ? [key] : ['a', 'hk', 'us'];
   for (const k of keys) {
-    const name = k === 'a' ? 'TH' : 'THH';
+    const name = k === 'a' ? 'TH' : k === 'hk' ? 'THH' : 'THU';
     const rows = db.series[k];
     // 与模板里的书写风格保持一致：单引号日期、逗号后一个空格
     const fmt = r => `['${r[0]}', ${r[1]}${r[2] !== undefined ? ', ' + r[2] : ''}]`;
@@ -125,7 +126,7 @@ else if (cmd === 'stat') {
   const [file] = args;
   if (!file) die('usage: node history.js stat <history.json>');
   const db = load(file);
-  for (const k of ['a', 'hk']) {
+  for (const k of ['a', 'hk', 'us']) {
     const rows = db.series[k];
     if (!rows.length) { console.log(`${k}: 空`); continue; }
     const vals = rows.map(r => r[1]);

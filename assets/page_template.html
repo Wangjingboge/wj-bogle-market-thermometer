@@ -94,15 +94,15 @@
   /* ── 温度计区 ── */
   .thermos {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
     margin: 24px 0 26px;
   }
 
   .tcard {
     border: 1px solid var(--line);
     border-radius: 16px;
-    padding: 14px 12px 12px 18px;
+    padding: 13px 10px 11px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -113,7 +113,7 @@
   }
   .tcard svg {
     flex: 0 0 auto;
-    height: 336px;
+    height: 248px;
     width: auto;
     display: block;
   }
@@ -124,15 +124,16 @@
     height: 3px;
   }
   .tcard.a::before { background: linear-gradient(90deg, #d93a33, #ff9a6b, transparent 85%); }
+  .tcard.u::before { background: linear-gradient(90deg, #6b5bd2, #9d8cf0, transparent 85%); }
   .tcard.h::before { background: linear-gradient(90deg, #2b7fd4, #5ec4b6, transparent 85%); }
 
   .tcard-l { min-width: 0; }
   .tlabel {
-    font-size: 26px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--ink);
     letter-spacing: .4px;
-    margin-bottom: 7px;
+    margin-bottom: 6px;
     white-space: nowrap;
     display: flex;
     align-items: center;
@@ -141,24 +142,25 @@
   .tlabel::before {
     content: "";
     flex: 0 0 auto;
-    width: 4px; height: 20px;
+    width: 4px; height: 17px;
     border-radius: 2px;
     background: var(--up);
   }
   .tcard.h .tlabel::before { background: #2b7fd4; }
+  .tcard.u .tlabel::before { background: #6b5bd2; }
   .tpill {
     display: inline-block;
     padding: 2px 9px;
     border-radius: 5px;
     background: var(--line-2);
     color: var(--ink-2);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: .2px;
-    margin-bottom: 11px;
+    margin-bottom: 9px;
   }
   .tnum {
-    font-size: 64px;
+    font-size: 44px;
     font-weight: 700;
     letter-spacing: -2px;
     line-height: .96;
@@ -166,16 +168,16 @@
   }
   .tnum i {
     font-style: normal;
-    font-size: 24px;
+    font-size: 17px;
     font-weight: 500;
     color: var(--muted);
     letter-spacing: 0;
     margin-left: 1px;
-    vertical-align: 14px;
+    vertical-align: 12px;
   }
   .tdelta {
-    margin-top: 9px;
-    font-size: 14px;
+    margin-top: 7px;
+    font-size: 12px;
     color: var(--ink-2);
     display: flex;
     align-items: center;
@@ -189,12 +191,12 @@
   .tdelta .up { color: var(--up); }
   .tdelta .down { color: var(--down); }
   .tverdict {
-    margin-top: 11px;
+    margin-top: 9px;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 13px;
-    padding: 3px 10px 3px 8px;
+    font-size: 12px;
+    padding: 3px 9px 3px 7px;
     border-radius: 20px;
     background: var(--line-2);
     color: var(--ink-2);
@@ -229,6 +231,7 @@
     background: var(--ink);
   }
   .sec-t.hk::before { background: #2b7fd4; }
+  .sec-t.us::before { background: #6b5bd2; }
   .sec-n {
     font-size: 17.5px;
     color: var(--muted);
@@ -403,11 +406,11 @@
   }
   .hnote b { color: #7d8693; font-weight: 600; }
 
-  /* 双栏并排 */
+  /* 三栏并排（A股 / 港股 / 美股 走势图） */
   .duo {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0 30px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0 20px;
     align-items: start;
   }
   .duo-col { min-width: 0; }
@@ -434,6 +437,37 @@
     background: var(--up);
   }
   .duo-t.hk::before { background: #2b7fd4; }
+  .duo-t.us::before { background: #6b5bd2; }
+
+  /* 三栏窄列的收敛：标题竖排、字号整体下调 */
+  .trio .duo-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    margin-bottom: 9px;
+  }
+  .trio .duo-t { font-size: 19px; gap: 7px; }
+  .trio .duo-t::before { width: 3.5px; height: 16px; }
+  .trio .duo-s { font-size: 11.5px; }
+  .trio .duo-legend { gap: 11px; font-size: 11.5px; margin-top: 8px; }
+  .trio .duo-legend i { width: 13px; }
+  .trio .duo-note { font-size: 11.5px; line-height: 1.5; }
+  .hist-bar.trio {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px 10px;
+    font-size: 11.5px;
+    margin-bottom: 7px;
+  }
+  .hist-bar.trio b { font-size: 13px; margin-left: 3px; }
+  .hist-bar.trio i {
+    font-style: normal;
+    font-size: 10px;
+    color: #949daa;
+    margin-left: 3px;
+    letter-spacing: .1px;
+  }
+
   .duo-s {
     font-size: 13.5px;
     color: #8d97a4;
@@ -446,12 +480,6 @@
     margin-bottom: 8px;
   }
   .hist-bar.duo b { font-size: 15.5px; margin-left: 4px; }
-  .hist-bar.duo i {
-    font-style: normal;
-    font-size: 12.5px;
-    color: #949daa;
-    margin-left: 4px;
-  }
   .duo-legend {
     display: flex;
     gap: 16px;
@@ -500,7 +528,7 @@
       <div class="brand-mark">博</div>
       <div>
         <div class="brand-t">望京博格的市场温度计</div>
-        <div class="brand-s">31个申万一级行业 + 6个宽基</div>
+        <div class="brand-s">A股 37 只 · 港股 7 只 · 美股 12 只</div>
       </div>
     </div>
     <div class="head-r">
@@ -511,15 +539,15 @@
 
   <div class="thermos" id="thermos"></div>
 
-  <div class="duo" style="margin-top:26px">
+  <div class="duo trio" style="margin-top:26px">
     <section class="duo-col">
       <div class="duo-head">
         <div class="duo-t">A股 十年温度走势</div>
         <div class="duo-s">2016/12 — 2026/10</div>
       </div>
-      <div class="hist-bar duo" id="histBar"></div>
+      <div class="hist-bar trio" id="histBar"></div>
       <div class="hist-wrap">
-        <svg id="histSvg" viewBox="0 0 460 300" role="img" aria-label="A股十年温度走势"></svg>
+        <svg id="histSvg" viewBox="0 0 301 270" role="img" aria-label="A股十年温度走势"></svg>
         <div class="htip" id="histTip"></div>
       </div>
       <div class="duo-legend"><span><i></i>50° 卖出线</span><span><i class="b30"></i>30° 买入线</span></div>
@@ -531,23 +559,38 @@
         <div class="duo-t hk">港股 十年温度走势</div>
         <div class="duo-s">2016/12 — 2026/10</div>
       </div>
-      <div class="hist-bar duo" id="histBar2"></div>
+      <div class="hist-bar trio" id="histBar2"></div>
       <div class="hist-wrap">
-        <svg id="histSvg2" viewBox="0 0 460 300" role="img" aria-label="港股十年温度走势"></svg>
+        <svg id="histSvg2" viewBox="0 0 301 270" role="img" aria-label="港股十年温度走势"></svg>
         <div class="htip" id="histTip2"></div>
       </div>
       <div class="duo-legend"><span><i></i>50° 卖出线</span><span><i class="b30"></i>30° 买入线</span></div>
       <div class="duo-note">标的由 2 只增至 7 只，早期与当前不完全可比。</div>
     </section>
+
+    <section class="duo-col">
+      <div class="duo-head">
+        <div class="duo-t us">美股 十年温度走势</div>
+        <div class="duo-s">2016/12 — 2026/10</div>
+      </div>
+      <div class="hist-bar trio" id="histBar3"></div>
+      <div class="hist-wrap">
+        <svg id="histSvg3" viewBox="0 0 301 270" role="img" aria-label="美股十年温度走势"></svg>
+        <div class="htip" id="histTip3"></div>
+      </div>
+      <div class="duo-legend"><span><i></i>50° 卖出线</span><span><i class="b30"></i>30° 买入线</span></div>
+      <div class="duo-note">按年采样，每年末一个点，末点为当期日更值。2020 年最热，2022 年加息砸出最冷。</div>
+    </section>
   </div>
 
   <div class="hnote">
-    <b>采样口径：</b>两图共用 48 个采样点（2016Q4–2025Q3 按季末，2025Q4 起按月，末点 2026-10-16）。
-    A股为 31 个申万一级行业 + 6 个宽基的 PE(TTM) 十年分位数等权平均；港股为 7 只港股指数同口径。
+    <b>采样口径：</b>A股/港股共用 67 个采样点（2016Q4–2025Q3 按季末，2025Q4 起按月，末点 2026-10-16）；
+    美股为 2016–2025 <b>每个自然年最后一个交易日</b>加当期日更点，共 11 点，比前两图稀疏，看趋势不看细节。
+    A股为 31 个申万一级行业 + 6 个宽基的 PE(TTM) 十年分位数等权平均；港股为 7 只港股指数同口径；美股为标普500 + 纳斯达克100 + 10 个标普500 GICS 一级行业指数同口径。
     港股这 7 只并非同时存在 —— <b>2016–2019 只有恒生指数、恒生消费</b>；2020 年起陆续纳入恒生科技、港股通红利；
     2021 年起纳入港股通非银（中证 931024.CSI）；2024–2025 年纳入汽车主题、创新药，7 只才算齐备，
     因此港股曲线越靠左，参与平均的标的越少（悬停可看当日标的数）。新指数的 PE 分位数历史不足 3 年时不计入当日均值，
-    避免短期极值把分位数钉在 0 或 100。
+    避免短期极值把分位数钉在 0 或 100。美股 2016 年那个点缺信息技术、医疗保健两只（Wind 无该年 PE 序列），按 10 只算。
   </div>
 
   <div class="sec-head">
@@ -562,6 +605,13 @@
   <table id="th"></table>
   <div class="tnote">「港股通非银」点位取中证 931024.CSI（2024-09-24 收 2534.39，2026-10-16 收 3605.58，按港币计价）。</div>
 
+  <div class="sec-head" style="margin-top:26px">
+    <div class="sec-t us">美股 分项温度 <span class="sec-n">12 个标的</span></div>
+    <div class="sec-r">温度升序（冷 → 热）</div>
+  </div>
+  <table id="tb"></table>
+  <div class="tnote">标普 500 行业口径为 GICS 一级行业。GICS 现有一级行业 11 个，其中「能源」在 Wind 无 PE(TTM) 历史序列，此处由「房地产」补足 10 个行业位。美股「924 以来」以 2024-09-24 美东收盘点位为基准，与 A股、港股同一口径。</div>
+
   <div class="foot">
     <div class="rule">
       <span><b>30 度以下</b> 开始买入（可提高仓位）</span>
@@ -570,8 +620,8 @@
       <span>开始卖出 ≠ 立刻清仓</span>
     </div>
     <div>
-      <b>编制方法：</b>取 31 个申万一级行业指数与 6 个宽基指数（中证A500、上证50、沪深300、中证500、创业板指、中证1000）各自最新 PE(TTM) 在<b>近 10 年</b>历史序列中的分位数，做<b>等权平均</b>（非市值加权）得到综合温度。市值加权会把银行、地产的高权重带进来，容易把温度压低，所以博格一直用等权。<br>
-      <b>涨幅列：</b>「924 以来」= 2026-10-16 收盘 ÷ 2024-09-24 收盘 − 1，按指数点位计算，不含分红。2024-09-24 是那轮一揽子政策的起点日，常被当作这轮行情的原点。<br>
+      <b>编制方法：</b>取各组指数各自最新 PE(TTM) 在<b>近 10 年</b>历史序列中的分位数，做<b>等权平均</b>（非市值加权）得到该组综合温度。A股为 31 个申万一级行业 + 6 个宽基（中证A500、上证50、沪深300、中证500、创业板指、中证1000）；美股为 12 只（标普500、纳斯达克100 + 10 个 GICS 一级行业）。市值加权会把银行、地产的高权重带进来，容易把温度压低，所以博格一直用等权。<br>
+      <b>涨幅列：</b>「924 以来」= 2026-10-16 收盘 ÷ 2024-09-24 收盘 − 1，按指数点位计算，不含分红。2024-09-24 是那轮一揽子政策的起点日，常被当作这轮行情的原点。美股 12 只同口径，基准取 2024-09-24 美东收盘点位。<br>
       <b>怎么用：</b>温度是估值位置的模糊刻度，不是点位预测。估值 = 股价 ÷ 盈利，盈利在涨的时候，同样的点位温度会自己降下来 —— 所以横向对比历史极值时，别忘了锚点会变。<br>
       <b>免责：</b>以上不构成任何投资建议，股市有风险，入市需谨慎。
     </div>
@@ -635,6 +685,11 @@ const H = [
   { n:'港股汽车',   chg: 0.78, ytd:-32.01, s924:   4.68, pe:21.05, t:29.9658, prev:30.5317, etf:'159323' },
 ];
 
+const U = [
+  // ── 2 个宽基 ──
+  { n:'标普500',     g:'宽基', chg: 0.00, ytd:  0.00, s924: null, pe: 0.00, t: 0.0000, etf:'' },
+];
+
 /* ───────── 工具 ───────── */
 const avg = a => a.reduce((s, x) => s + x.t, 0) / a.length;
 const f2  = v => v.toFixed(2);
@@ -667,7 +722,7 @@ function verdict(t) {
 }
 
 /* ───────── 温度计 SVG ───────── */
-function thermometer(value, uid) {
+function thermometer(value, uid, compact) {
   const Y0 = 320, Y1 = 40, k = (Y0 - Y1) / 100;   // 0度线 / 100度线
   const y = v => Y0 - v * k;
   const cx = 74, tubeW = 42, tubeTop = 36, tubeBot = 302;
@@ -710,7 +765,7 @@ function thermometer(value, uid) {
     30: ['30° 以下开始买入', '（可提高仓位）'],
     50: ['50° 以上开始卖出', '（不可提高仓位）'],
   };
-  const marks = [30, 50].map(v => {
+  const marks = compact ? '' : [30, 50].map(v => {
     const yy = y(v);
     const [l1, l2] = notes[v];
     return `<rect x="104" y="${yy - 17}" width="126" height="34" rx="6" fill="#f4f6f9"/>
@@ -722,8 +777,9 @@ function thermometer(value, uid) {
               letter-spacing=".1">${l2}</text>`;
   }).join('');
 
+  const VW = compact ? 106 : 236;   // 三列紧凑版只留刻度，不放 30/50 文字框
   return `
-  <svg viewBox="0 0 236 372" width="236" height="372" role="img" aria-label="温度 ${f2(value)}">
+  <svg viewBox="0 0 ${VW} 372" width="${VW}" height="372" role="img" aria-label="温度 ${f2(value)}">
     <defs>
       <clipPath id="clip-${uid}"><path d="${GLASS}"/></clipPath>
       <linearGradient id="mt-${uid}" x1="0" y1="0" x2="0" y2="1">
@@ -756,11 +812,11 @@ function thermometer(value, uid) {
 /* ───────── 卡片 ───────── */
 function card(name, sub, data, cls) {
   const t = avg(data);
-  const p = data.reduce((s, x) => s + x.prev, 0) / data.length;
-  const d = t - p;
+  const p = PAVG[cls];
+  const d = (p == null) ? null : t - p;          // 序列首日没有上一交易日
   const [txt, col] = verdict(t);
-  const arrow = d > 0.005 ? 'up' : d < -0.005 ? 'down' : 'flat';
-  const sign = d > 0.005 ? '+' : '';
+  const arrow = d == null ? 'flat' : d > 0.005 ? 'up' : d < -0.005 ? 'down' : 'flat';
+  const sign = d != null && d > 0.005 ? '+' : '';
   return `
   <div class="tcard ${cls}">
     <div class="tcard-l">
@@ -768,31 +824,31 @@ function card(name, sub, data, cls) {
       <div class="tpill">${sub}</div>
       <div class="tnum" style="color:${tempColor(t)}">${f2(t)}<i>℃</i></div>
       <div class="tdelta">
-        较上一交易日
-        <em class="${arrow}">${sign}${f2(d)}°</em>
+        ${d == null ? '首日建仓' : '较上一交易日'}
+        <em class="${arrow}">${d == null ? '—' : sign + f2(d) + '°'}</em>
       </div>
       <div class="tverdict"><i style="background:${tempColor(t)}"></i>${txt}</div>
     </div>
-    ${thermometer(t, cls)}
+    ${thermometer(t, cls, true)}
   </div>`;
 }
 
 document.getElementById('thermos').innerHTML =
-  card('A股', '37个标的', A, 'a') + card('港股', '7个标的', H, 'h');
+  card('A股', '37个标的', A, 'a') + card('港股', '7个标的', H, 'h') + card('美股', '12个标的', U, 'u');
 
 /* ───────── 表格 ───────── */
 function pct(v) {
-  if (v == null) return `<span class="flat" title="该指数 2024-09-24 尚无数据">—</span>`;
+  if (v == null) return `<span class="flat" title="无基准数据">—</span>`;
   const s = v > 0.0001 ? '+' : '';
   const c = v > 0.0001 ? 'up' : v < -0.0001 ? 'down' : 'flat';
   return `<span class="${c}">${s}${v.toFixed(2)}%</span>`;
 }
 
-function render(el, rows, withGroup) {
+function render(el, rows, withGroup, nameLabel) {
   let sortKey = 't', sortAsc = true;
   const cols = [
     { k: 'idx', t: '序',   cls: 'c-idx',  sortable: false },
-    { k: 'n',   t: '行业名称', cls: 'c-name', sortable: false },
+    { k: 'n',   t: nameLabel || '行业名称', cls: 'c-name', sortable: false },
     { k: 'ytd', t: '今年以来', cls: '' },
     { k: 's924', t: '924以来', cls: '' },
     { k: 'pe',  t: '当日PE', cls: 'c-pe' },
@@ -841,8 +897,9 @@ function render(el, rows, withGroup) {
   paint();
 }
 
-render(document.getElementById('ta'), A, true);
-render(document.getElementById('th'), H, false);
+render(document.getElementById('ta'), A, true, '行业名称');
+render(document.getElementById('th'), H, false, '指数名称');
+render(document.getElementById('tb'), U, true, '指数名称');
 
 /* ───────── 十年温度走势 ─────────
    口径与温度计完全一致：每个日期取 37 个标的 PE(TTM) 近10年分位数的等权平均。
@@ -880,14 +937,23 @@ const THH = [
   ['2026-06-30', 40.23, 7], ['2026-07-31', 56.67, 7], ['2026-09-30', 34.29, 7], ['2026-10-16', 30.78, 7],
 ];
 
+/* 美股：2016–2025 每年最后一个交易日 + 当期日更点。
+   第三个数字是当日参与平均的标的数（12 只；2016 年缺信息技术、医疗保健，按 10 只算）。 */
+const THU = [
+  ['2016-12-29', 33.42, 10], ['2017-12-28', 43.80, 12], ['2018-12-27', 17.16, 12],
+  ['2019-12-30', 48.96, 12], ['2020-12-30', 79.86, 12], ['2021-12-30', 67.28, 12],
+  ['2022-12-29', 27.59, 12], ['2023-12-28', 51.10, 12], ['2024-12-30', 70.16, 12],
+  ['2025-12-30', 78.18, 12], ['2026-10-16', 47.81, 12],
+];
+
 function renderHist(o) {
   const TH = o.data, S = o.sfx;
-  const C = !!o.compact;                       // 窄版（双栏并排）
+  const C = !!o.compact;                       // 窄版（三栏并排）
   const W = o.w || 944, H = o.h || 268;
   const ml = o.ml ?? (C ? 25 : 36), mr = o.mr ?? (C ? 16 : 68);
   const mt = o.mt ?? (C ? 24 : 16), mb = o.mb ?? (C ? 22 : 26);
-  const fA = C ? 10 : 11;                    // 刻度字号
-  const fL = C ? 10.5 : 11.5;                     // 标注字号
+  const fA = o.fA ?? (C ? 9.5 : 11);          // 刻度字号
+  const fL = o.fL ?? (C ? 10 : 11.5);         // 标注字号
   const t0 = Date.parse(TH[0][0]), t1 = Date.parse(TH[TH.length - 1][0]);
   const X = d => ml + (Date.parse(d) - t0) / (t1 - t0) * (W - ml - mr);
   const Y = v => mt + (100 - v) / 100 * (H - mt - mb);
@@ -915,7 +981,7 @@ function renderHist(o) {
   s += `<rect x="${ml}" y="${Y(30)}" width="${W - ml - mr}" height="${Y(0) - Y(30)}" fill="#3d8bd9" opacity=".05"/>`;
 
   /* 年份竖线 + 网格 */
-  const step = C ? 2 : 1;
+  const step = o.step ?? (C ? 2 : 1);
   for (let y = 2017; y <= 2026; y += step) {
     const tx = X(`${y}-01-01`);
     if (tx > W - mr - 8) continue;
@@ -942,7 +1008,7 @@ function renderHist(o) {
   });
 
   /* 曲线（Catmull-Rom 转贝塞尔，轻度平滑） */
-  const k = 0.32;
+  const k = o.k ?? 0.32;                    // 稀疏点用更小的张力，避免样条过冲
   let dp = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
   for (let i = 0; i < pts.length - 1; i++) {
     const p0 = pts[Math.max(0, i - 1)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(pts.length - 1, i + 2)];
@@ -957,7 +1023,7 @@ function renderHist(o) {
   const hi = pts.reduce((a, b) => b.v > a.v ? b : a);
   const lo = pts.reduce((a, b) => b.v < a.v ? b : a);
   const last = pts[pts.length - 1];
-  const edge = C ? 62 : 96;
+  const edge = o.edge ?? (C ? 62 : 96);
   const pos = (p, up) => {
     const nearR = p.x > W - mr - edge, nearL = p.x < ml + edge;
     if (up) return { a: nearR ? 'end' : nearL ? 'start' : 'middle', x: nearR ? p.x - 6 : nearL ? p.x + 6 : p.x, y: p.y - 9 };
@@ -974,8 +1040,8 @@ function renderHist(o) {
   const below = last.y + 18 <= B - 2;
   s += `<circle cx="${last.x.toFixed(1)}" cy="${last.y.toFixed(1)}" r="${C ? 5.6 : 6.4}" fill="#fff" opacity=".9"/>`;
   s += `<circle cx="${last.x.toFixed(1)}" cy="${last.y.toFixed(1)}" r="3.4" fill="${tempColor(last.v)}"/>`;
-  s += `<text x="${(last.x - 1).toFixed(1)}" y="${(below ? last.y + 17 : last.y - 12).toFixed(1)}" text-anchor="end" font-size="${C ? 11.5 : 12.5}"
-          font-weight="600" fill="${tempColor(last.v)}" stroke="#fff" stroke-width="3" paint-order="stroke"
+  s += `<text x="${(last.x - (C ? 6 : 1)).toFixed(1)}" y="${(below ? last.y + 17 : last.y - 12).toFixed(1)}" text-anchor="end" font-size="${C ? 11.5 : 12.5}"
+          font-weight="600" fill="${tempColor(last.v)}" stroke="#fff" stroke-width="3.2" paint-order="stroke"
           stroke-linejoin="round">${f2(last.v)}°</text>`;
 
   /* 交互层 */
@@ -1028,8 +1094,12 @@ function renderHist(o) {
   });
 }
 
-renderHist({ data: TH,  sfx: 'a', w: 460, h: 300, compact: true, svgId: 'histSvg',  barId: 'histBar',  tipId: 'histTip'  });
-renderHist({ data: THH, sfx: 'h', w: 460, h: 300, compact: true, svgId: 'histSvg2', barId: 'histBar2', tipId: 'histTip2' });
+renderHist({ data: TH,  sfx: 'a', w: 301, h: 270, ml: 26, mr: 13, mt: 18, mb: 20, edge: 46,
+             compact: true, svgId: 'histSvg',  barId: 'histBar',  tipId: 'histTip'  });
+renderHist({ data: THH, sfx: 'h', w: 301, h: 270, ml: 26, mr: 13, mt: 18, mb: 20, edge: 46,
+             compact: true, svgId: 'histSvg2', barId: 'histBar2', tipId: 'histTip2' });
+renderHist({ data: THU, sfx: 'u', w: 301, h: 270, ml: 26, mr: 13, mt: 18, mb: 20, edge: 46, k: 0.16,
+             compact: true, svgId: 'histSvg3', barId: 'histBar3', tipId: 'histTip3' });
 </script>
 </body>
 </html>
