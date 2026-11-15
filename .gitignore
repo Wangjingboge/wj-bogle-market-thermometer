@@ -10,6 +10,7 @@ data/audit.log
 # 产物
 市场温度计-*.html
 *.png
+dist/
 
 # 运行时
 node_modules/

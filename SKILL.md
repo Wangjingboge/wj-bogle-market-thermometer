@@ -1,12 +1,12 @@
 ---
 name: wj-bogle-market-thermometer
-version: 1.3.4
+version: 1.3.5
 display_name: 望京博格的市场温度计
 display_name_en: WJ Bogle Market Thermometer
 prerequisites: 必须已安装金融数据 MCP（Wind 指数数据 MCP，或东方财富妙想 MCP）；否则取不到指数 PE 十年分位数，skill 无法产出。安装方式见 references/mcp-setup.md
-description: 复刻望京博格「市场温度计」——用 Wind 取 31 个申万一级行业 + 6 个宽基（A股 37 个标的）与 7 只港股指数、12 只美股指数（标普500、纳斯达克100 + 10 个 GICS 一级行业）的 PE(TTM) 近十年分位数，等权平均成 0-100 的市场温度，产出单文件 HTML 看板并导出 2160×8150 高清长图。历史温度累积在 data/temperature-history.json，十年走势只补新点、不重取。前置条件：需先安装金融数据 MCP（Wind 指数数据 MCP 或东方财富妙想 MCP），否则取不到分位数，安装方式见 references/mcp-setup.md。 当用户提到「市场温度计」「望京博格温度」「A股/港股温度」「行业估值分位」「申万行业温度」「更新温度」「出温度长图」时使用。
-description_zh: "复刻望京博格「市场温度计」：用 Wind 取 31 个申万一级行业 + 6 个宽基（A股 37 个标的）与 7 只港股指数、12 只美股指数（标普500、纳斯达克100 + 10 个 GICS 一级行业）的 PE(TTM) 近十年分位数，等权平均成 0-100 的市场温度，产出单文件 HTML 看板并导出 2160×8150 高清长图。历史温度累积在 data/temperature-history.json，十年走势只补新点、不重取。前置条件：需先安装金融数据 MCP（Wind 或东方财富妙想），否则取不到分位数。当用户提到「市场温度计」「A股/港股温度」「行业估值分位」「申万行业温度」「更新温度」时使用。"
-description_en: "Reproduces WJ Bogle's Market Thermometer: pulls 10-year PE(TTM) percentiles from Wind for 31 SW level-1 industries plus 6 broad-based indices (37 A-share targets) plus 7 Hong Kong and 12 US indices (S&P 500, Nasdaq 100 and 10 GICS level-1 sectors), equal-weights them into a 0-100 market temperature, builds a single-file HTML dashboard and exports a 2160x8150 hi-res long image. History accumulates in data/temperature-history.json (append-only, no re-fetching). Prerequisite: a financial-data MCP (Wind index-data MCP or Eastmoney Miaoxiang MCP) must be installed, otherwise percentiles cannot be fetched; see references/mcp-setup.md. Use when the user mentions market thermometer, A-share or HK temperature, industry valuation percentile, SW industry temperature, or updating the temperature chart."
+description: 复刻望京博格「市场温度计」——用 Wind 取 31 个申万一级行业 + 6 个宽基（A股 37 个标的）与 7 只港股指数、12 只美股指数（标普500、纳斯达克100 + 10 个 GICS 一级行业）的 PE(TTM) 近十年分位数，等权平均成 0-100 的市场温度，产出单文件 HTML 看板并导出 2160×8340 高清长图。历史温度累积在 data/temperature-history.json，十年走势只补新点、不重取。前置条件：需先安装金融数据 MCP（Wind 指数数据 MCP 或东方财富妙想 MCP），否则取不到分位数，安装方式见 references/mcp-setup.md。 当用户提到「市场温度计」「望京博格温度」「A股/港股温度」「行业估值分位」「申万行业温度」「更新温度」「出温度长图」时使用。
+description_zh: "复刻望京博格「市场温度计」：用 Wind 取 31 个申万一级行业 + 6 个宽基（A股 37 个标的）与 7 只港股指数、12 只美股指数（标普500、纳斯达克100 + 10 个 GICS 一级行业）的 PE(TTM) 近十年分位数，等权平均成 0-100 的市场温度，产出单文件 HTML 看板并导出 2160×8340 高清长图。历史温度累积在 data/temperature-history.json，十年走势只补新点、不重取。前置条件：需先安装金融数据 MCP（Wind 或东方财富妙想），否则取不到分位数。当用户提到「市场温度计」「A股/港股温度」「行业估值分位」「申万行业温度」「更新温度」时使用。"
+description_en: "Reproduces WJ Bogle's Market Thermometer: pulls 10-year PE(TTM) percentiles from Wind for 31 SW level-1 industries plus 6 broad-based indices (37 A-share targets) plus 7 Hong Kong and 12 US indices (S&P 500, Nasdaq 100 and 10 GICS level-1 sectors), equal-weights them into a 0-100 market temperature, builds a single-file HTML dashboard and exports a 2160x8340 hi-res long image. History accumulates in data/temperature-history.json (append-only, no re-fetching). Prerequisite: a financial-data MCP (Wind index-data MCP or Eastmoney Miaoxiang MCP) must be installed, otherwise percentiles cannot be fetched; see references/mcp-setup.md. Use when the user mentions market thermometer, A-share or HK temperature, industry valuation percentile, SW industry temperature, or updating the temperature chart."
 agent_created: true
 ---
 
@@ -69,11 +69,12 @@ python scripts/check_env.py     # 查文件、标的清单、依赖；MCP 需人
 
 | 项目 | 定版 |
 |---|---|
-| 页头标题 | **望京博格的市场温度计**（副标题写「A股 37 只 · 港股 7 只 · 美股 12 只」，不重复署名） |
+| 页头标题 | **望京博格的市场温度计**（副标题写「A股指数 37 只 · 港股指数 7 只 · 美股指数 12 只」，不重复署名） |
 | 表格列 | 序 / 行业名称（港股·美股为「指数名称」）/ 今年以来 / 924以来 / 当日PE / 行业温度 / 相关标的 —— **没有「当日涨幅」列** |
 | 默认排序 | **按行业温度升序（冷 → 热）**，`sortKey='t', sortAsc=true` |
 | 分项区字号 | 表格正文 21px、表头 18px、小标题 23px（比原始版大两个字号） |
-| 产物规格 | **默认 2160×8150 高清 PNG**（视口 1080、输出 2x 像素），三图并排后约 1:3.8；1080 版只在要小体积时降级出 |
+| 四句操作纪律 | 放**三张走势图正下方**（不在页脚），18px，2×2 网格；买入列**红**、卖出列**蓝**（与参考线颜色相反，博格指定） |
+| 产物规格 | **默认 2160×8340 高清 PNG**（视口 1080、输出 2x 像素），三图并排后约 1:3.8；1080 版只在要小体积时降级出 |
 
 `chg`（当日涨幅）仍要取，留在数组里当核对用，只是不渲染。改列宽时先看 `references/rendering.md` 的字号基线一节。
 
@@ -233,10 +234,10 @@ A股 / 港股 / 美股**三张走势图并排一行**（各 301×270 的 viewBox
 
 ### Step 5 · 导出长图
 
-**标准产物就是高清图**（2026-10-19 定版）：默认出 2160×8150，发小红书/公众号都直接用这张，别再交 1080 的。
+**标准产物就是高清图**（2026-10-19 定版）：默认出 2160×8340，发小红书/公众号都直接用这张，别再交 1080 的。
 
 ```bash
-node scripts/export_long.js <html> <输出png>              # 高清版 2160×8150（默认）
+node scripts/export_long.js <html> <输出png>              # 高清版 2160×8340（默认）
 ```
 
 playwright-core 与 Chromium 内核浏览器由脚本自动探测（环境变量 → PATH → 常见安装位置），**不需要在命令里写 `NODE_PATH` 或浏览器路径**。装之前先跑 `python scripts/runtime.py` 看本机探测结果：
@@ -253,7 +254,7 @@ python scripts/runtime.py        # 打印平台 / python / node / playwright-cor
 node scripts/export_long.js <html> <输出png> 1080 1080    # 轻量版 1080×4075
 ```
 
-产物比例约 1:3.8（CSS 高 4075，高清版像素高 8150），PNG 约 2.0MB。参数与翻车点见 `references/export.md`。
+产物比例约 1:3.8（CSS 高 4170，高清版像素高 8150），PNG 约 2.0MB。参数与翻车点见 `references/export.md`。
 
 ## 日更三步（标准动作）
 
@@ -345,7 +346,8 @@ python scripts/package.py --list     # 先看会打进去哪些文件
 
 ## 更新日志
 
-- **1.3.4 / 2026-11-13（当前定版）**：博格看过 1.3.3 后要「美股十年走势跟 A股、港股并排」——把 `THU` 三图并排**加回来**，但按 1.3.1 踩过的坑重调参数：`viewBox 301×270`（列宽 (944−40)/3）、`compact` 窄版、`step: 2` 隔年标年份、`edge: 46`，美股 11 点仍用 `k: 0.16` 防过冲。三张图顶部标题、统计条与上方三张温度卡对齐；页高 2160×8216 → 2160×8150（比 1.3.1 的 8108 略高，因为图高从 250 提到 270）。
+- **1.3.5 / 2026-11-14（当前定版）**：① 博格改读图顺序——把原来压在页脚的「30 度以下 开始买入（可提高仓位）／50 度以上 开始卖出（不可提高仓位）／开始买入 ≠ 直接满仓／开始卖出 ≠ 立刻清仓」四句，提到**三张十年走势图正下方**（`.trio` 之后、分项表格之前），单独成一条 `.rule`（**字号 18px**，2×2 网格左买右卖，上下留白 26/30）；「采样口径」整段从走势图下移到**页脚最前、编制方法之前**。页面元素一块没删，只调顺序 + 把 `.foot .rule` 样式提升为通用 `.rule`。② 四句按买卖方向上色：左列买入**红** `var(--up)` #d93a33、右列卖出**蓝** #2b7fd4，圆点跟随 `currentColor`（opacity .42）——**与走势图 30°/50° 参考线颜色正好相反，这是博格指定的**，别对调。③ 页头副标题改为「**A股指数** 37 只 · **港股指数** 7 只 · **美股指数** 12 只」。页高 2160×8150 → 2160×8340（CSS 4170）。
+- **1.3.4 / 2026-11-13**：博格看过 1.3.3 后要「美股十年走势跟 A股、港股并排」——把 `THU` 三图并排**加回来**，但按 1.3.1 踩过的坑重调参数：`viewBox 301×270`（列宽 (944−40)/3）、`compact` 窄版、`step: 2` 隔年标年份、`edge: 46`，美股 11 点仍用 `k: 0.16` 防过冲。三张图顶部标题、统计条与上方三张温度卡对齐；页高 2160×8216 → 2160×8150（比 1.3.1 的 8108 略高，因为图高从 250 提到 270）。
 - **1.3.3 / 2026-11-13**（已被 1.3.4 取代，留档说明为什么反复）：按博格要求把版式退回「11-12 首版」——删掉美股十年走势图（`THU` 数组、`histSvg3`、`histBar3`、`histTip3` 一并移除），A股 / 港股两张走势图恢复两栏大图（viewBox 455×310，`step: 2` 隔年标年份、`mr: 96` 给右侧 30°/50° 文案留位）。页高 2160×8108 → 2160×8216。**教训：版式偏好属于主观选择，改版前先问清楚要哪一版，别靠猜。**
 - **1.3.2 / 2026-11-12**：修打包。平台只接受**两级目录**（根 / 二级 / 文件），`data/archive/` 造成三级嵌套被判「目录层级超限」——该目录已从分发包剔除（12 份快照早已 migrate 进 `market-data.json`），本地保留。新增 `scripts/package.py`：打包前校验层级、按 `SKILL.md` 的 `version:` 自动命名、排除 `backup` / `inbox` / `archive` / `__pycache__` / 审计日志，写盘后回读再校验一次。
 - **1.3.1 / 2026-11-12**：A股 / 港股 / 美股三张十年温度走势图改为**三栏并排**（每图 viewBox 298×250，统计条改 2×2 网格、标题竖排、字号收敛），删掉美股通栏 section；页高 2160×9042 → 2160×8108。
